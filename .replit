@@ -1,4 +1,4 @@
-modules = ["php", "php-8.2"]
+modules = ["web", "php-8.2"]
 [agent]
 expertMode = true
 
@@ -29,3 +29,10 @@ outputType = "webview"
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[nix]
+channel = "stable-25_05"
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["php", "-S", "0.0.0.0:5000", "-t", "public"]

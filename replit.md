@@ -8,7 +8,12 @@ Tewiiq is a fully functional Arabic social media application built with PHP that
 - ✅ Tweet posting and viewing functionality
 - ✅ User profiles with follow/unfollow system
 - ✅ Like/unlike tweets functionality
-- ✅ SQLite database with sample data
+- ✅ **NEW**: Tweet detail pages with replies and threading
+- ✅ **NEW**: Advanced search functionality with filtering
+- ✅ **NEW**: User settings and preferences management
+- ✅ **NEW**: Lists and groups functionality
+- ✅ **NEW**: Events and live broadcasting features
+- ✅ SQLite database with comprehensive schema
 - ✅ Responsive Arabic RTL interface
 - ✅ Server running on port 5000
 
@@ -37,11 +42,31 @@ Preferred communication style: Simple, everyday language.
 - **Environment**: PHP dotenv for configuration management
 - **Architecture Pattern**: MVC-like structure with templates separated from logic
 - **File Structure**: Organized with separate directories for templates, static assets, and vendor dependencies
+- **Controllers**: Comprehensive controller system including:
+  - `AuthController`: User authentication and registration
+  - `HomeController`: Main timeline and tweet management
+  - `ProfileController`: User profile management and following
+  - `TweetDetailController`: Individual tweet pages with replies
+  - `SearchController`: Advanced search and filtering
+  - `SettingsController`: User preferences and account management
+  - `ListController`: User-created lists and groups
+  - `EventController`: Live events and broadcasting features
 
 ## Data Storage
 - **ORM**: RedBean PHP v5.7.5 providing automatic table creation and relationship mapping
 - **Database**: SQLite database (tewiiq.db) for simplicity and portability
-- **Schema**: Automatic schema generation based on bean usage patterns
+- **Schema**: Comprehensive database schema with 10+ tables including:
+  - `users`: User accounts and profiles
+  - `tweets`: Main tweet content
+  - `replies`: Tweet replies with threading support
+  - `likes`: Tweet like relationships
+  - `replylikes`: Reply like relationships
+  - `follows`: User follow relationships
+  - `tweetlists`: User-created lists and groups
+  - `listmembers`: List membership relationships
+  - `events`: Live events and broadcasting
+  - `eventparticipants`: Event participation tracking
+  - `usersettings`: User preferences and configurations
 - **Data Access**: Active Record pattern through RedBean's bean objects
 - **Sample Data**: Includes pre-populated users, tweets, and follow relationships
 

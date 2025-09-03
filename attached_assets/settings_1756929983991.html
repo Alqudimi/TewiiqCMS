@@ -1,0 +1,2177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات والخصوصية</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="static/css/settings.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar" class="sidebar p-3">
+            <div class="d-flex align-items-center mb-4">
+                <i class="fas fa-cog fa-2x text-primary me-2"></i>
+                <h3 class="mb-0 text-primary">الإعدادات</h3>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link active" href="#account-settings" data-section="account-settings">
+                        <i class="fas fa-user-circle"></i>
+                        إعدادات الحساب
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link" href="#privacy-settings" data-section="privacy-settings">
+                        <i class="fas fa-shield-alt"></i>
+                        الخصوصية والأمان
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link" href="#notifications-settings" data-section="notifications-settings">
+                        <i class="fas fa-bell"></i>
+                        الإشعارات
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link" href="#appearance-settings" data-section="appearance-settings">
+                        <i class="fas fa-paint-brush"></i>
+                        المظهر
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link" href="#media-storage-settings" data-section="media-storage-settings">
+                        <i class="fas fa-photo-video"></i>
+                        الوسائط والتخزين
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link" href="#language-region-settings" data-section="language-region-settings">
+                        <i class="fas fa-globe"></i>
+                        اللغة والمنطقة
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link" href="#accessibility-settings" data-section="accessibility-settings">
+                        <i class="fas fa-universal-access"></i>
+                        إمكانية الوصول
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link" href="#help-support-settings" data-section="help-support-settings">
+                        <i class="fas fa-question-circle"></i>
+                        المساعدة والدعم
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link" href="#about-app-settings" data-section="about-app-settings">
+                        <i class="fas fa-info-circle"></i>
+                        حول التطبيق
+                    </a>
+                </li>
+            </ul>
+            <div class="mt-auto p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>الوضع المظلم</span>
+                    <label class="dark-mode-switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="dark-mode-slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="content-area">
+            <!-- Header Bar -->
+            <header class="header-bar mb-4 rounded-3">
+                <h2 id="current-section-title" class="mb-0">إعدادات الحساب</h2>
+                <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="#">الرئيسية</a></li>
+                        <li class="breadcrumb-item active" aria-current="page" id="current-breadcrumb">إعدادات الحساب</li>
+                    </ol>
+                </nav>
+            </header>
+
+            <!-- Dynamic Content Sections -->
+            <div id="settings-content">
+                <!-- Account Settings Section -->
+                <section id="account-settings" class="settings-content-section card p-4 active">
+                    <h3 class="card-title mb-4"><i class="fas fa-user-circle section-title-icon"></i> إعدادات الحساب</h3>
+                    
+                    <!-- Profile Information -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-user me-2"></i>
+                            معلومات الملف الشخصي
+                        </div>
+                        <div class="card-body">
+                            <form id="profile-form">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="firstName" class="form-label">الاسم الأول</label>
+                                        <input type="text" class="form-control" id="firstName" name="firstName" value="أحمد" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="lastName" class="form-label">الاسم الأخير</label>
+                                        <input type="text" class="form-control" id="lastName" name="lastName" value="محمد" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">اسم المستخدم</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">@</span>
+                                        <input type="text" class="form-control" id="username" name="username" value="ahmed_mohamed" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">البريد الإلكتروني</label>
+                                    <input type="email" class="form-control" id="email" name="email" value="ahmed@example.com" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">رقم الهاتف</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" value="+966501234567">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bio" class="form-label">النبذة الشخصية</label>
+                                    <textarea class="form-control" id="bio" name="bio" rows="3" maxlength="160">مطور ومصمم واجهات المستخدم، أحب التكنولوجيا والابتكار.</textarea>
+                                    <div class="form-text">160 حرف كحد أقصى</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="website" class="form-label">الموقع الإلكتروني</label>
+                                    <input type="url" class="form-control" id="website" name="website" value="https://ahmed-mohamed.com">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="location" class="form-label">الموقع</label>
+                                    <input type="text" class="form-control" id="location" name="location" value="الرياض، المملكة العربية السعودية">
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>
+                                    حفظ التغييرات
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Account Security -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-shield-alt me-2"></i>
+                            أمان الحساب
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تغيير كلمة المرور</strong>
+                                    <small class="text-muted d-block">آخر تغيير: منذ 3 أشهر</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                                        تغيير
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>المصادقة الثنائية</strong>
+                                    <small class="text-muted d-block">حماية إضافية لحسابك</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="twoFactorAuth" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تسجيل الدخول عبر البريد الإلكتروني</strong>
+                                    <small class="text-muted d-block">السماح بتسجيل الدخول باستخدام البريد الإلكتروني</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="emailLogin" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>الجلسات النشطة</strong>
+                                    <small class="text-muted d-block">عرض وإدارة الأجهزة المتصلة</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#activeSessionsModal">
+                                        عرض
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Preferences -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-cog me-2"></i>
+                            تفضيلات الحساب
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>الحساب الخاص</strong>
+                                    <small class="text-muted d-block">جعل حسابك مرئياً للمتابعين فقط</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="privateAccount">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>إظهار النشاط</strong>
+                                    <small class="text-muted d-block">السماح للآخرين برؤية نشاطك</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="showActivity" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>فهرسة المحتوى</strong>
+                                    <small class="text-muted d-block">السماح لمحركات البحث بفهرسة ملفك الشخصي</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="searchIndexing" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Privacy Settings Section -->
+                <section id="privacy-settings" class="settings-content-section card p-4">
+                    <h3 class="card-title mb-4"><i class="fas fa-shield-alt section-title-icon"></i> الخصوصية والأمان</h3>
+                    
+                    <!-- Privacy Controls -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-eye me-2"></i>
+                            التحكم في الخصوصية
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>من يمكنه رؤية منشوراتك</strong>
+                                    <small class="text-muted d-block">تحديد من يمكنه رؤية المحتوى الذي تنشره</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <select class="form-select" data-setting="postVisibility">
+                                        <option value="public" selected>الجميع</option>
+                                        <option value="followers">المتابعون فقط</option>
+                                        <option value="friends">الأصدقاء فقط</option>
+                                        <option value="private">أنا فقط</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>من يمكنه إرسال رسائل لك</strong>
+                                    <small class="text-muted d-block">التحكم في من يمكنه إرسال رسائل خاصة</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <select class="form-select" data-setting="messagePermissions">
+                                        <option value="everyone">الجميع</option>
+                                        <option value="followers" selected>المتابعون فقط</option>
+                                        <option value="friends">الأصدقاء فقط</option>
+                                        <option value="none">لا أحد</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>من يمكنه الإشارة إليك</strong>
+                                    <small class="text-muted d-block">التحكم في من يمكنه الإشارة إليك في المنشورات</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <select class="form-select" data-setting="mentionPermissions">
+                                        <option value="everyone" selected>الجميع</option>
+                                        <option value="followers">المتابعون فقط</option>
+                                        <option value="friends">الأصدقاء فقط</option>
+                                        <option value="none">لا أحد</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>إخفاء قائمة المتابعين</strong>
+                                    <small class="text-muted d-block">عدم إظهار قائمة متابعيك للآخرين</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="hideFollowersList">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>إخفاء قائمة المتابَعين</strong>
+                                    <small class="text-muted d-block">عدم إظهار قائمة من تتابعهم للآخرين</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="hideFollowingList">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Privacy -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-database me-2"></i>
+                            خصوصية البيانات
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تتبع الموقع</strong>
+                                    <small class="text-muted d-block">السماح بتتبع موقعك الجغرافي</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="locationTracking">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>مشاركة البيانات التحليلية</strong>
+                                    <small class="text-muted d-block">مشاركة بيانات الاستخدام لتحسين الخدمة</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="analyticsSharing" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>الإعلانات المخصصة</strong>
+                                    <small class="text-muted d-block">عرض إعلانات مخصصة بناءً على اهتماماتك</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="personalizedAds" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تنزيل بياناتك</strong>
+                                    <small class="text-muted d-block">تحميل نسخة من جميع بياناتك</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="downloadUserData()">
+                                        <i class="fas fa-download me-1"></i>
+                                        تنزيل
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>حذف الحساب</strong>
+                                    <small class="text-muted d-block">حذف حسابك وجميع بياناتك نهائياً</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                                        <i class="fas fa-trash me-1"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blocked Users -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-ban me-2"></i>
+                            المستخدمون المحظورون
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted">قائمة المستخدمين الذين قمت بحظرهم</p>
+                            <div class="list-group">
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-3" alt="User Avatar">
+                                        <div>
+                                            <strong>مستخدم محظور 1</strong>
+                                            <small class="text-muted d-block">@blocked_user1</small>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-secondary btn-sm">إلغاء الحظر</button>
+                                </div>
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-3" alt="User Avatar">
+                                        <div>
+                                            <strong>مستخدم محظور 2</strong>
+                                            <small class="text-muted d-block">@blocked_user2</small>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-secondary btn-sm">إلغاء الحظر</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Notifications Settings Section -->
+                <section id="notifications-settings" class="settings-content-section card p-4">
+                    <h3 class="card-title mb-4"><i class="fas fa-bell section-title-icon"></i> الإشعارات</h3>
+                    
+                    <!-- Push Notifications -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-mobile-alt me-2"></i>
+                            الإشعارات الفورية
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تفعيل الإشعارات الفورية</strong>
+                                    <small class="text-muted d-block">استقبال إشعارات فورية على جهازك</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="pushNotifications" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>الإشعارات الصوتية</strong>
+                                    <small class="text-muted d-block">تشغيل صوت عند وصول إشعار جديد</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="soundNotifications" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>الاهتزاز</strong>
+                                    <small class="text-muted d-block">اهتزاز الجهاز عند وصول إشعار</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="vibrationNotifications" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email Notifications -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-envelope me-2"></i>
+                            إشعارات البريد الإلكتروني
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>الرسائل الجديدة</strong>
+                                    <small class="text-muted d-block">إشعار عبر البريد عند وصول رسالة جديدة</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="emailNewMessages" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>المتابعون الجدد</strong>
+                                    <small class="text-muted d-block">إشعار عند حصولك على متابع جديد</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="emailNewFollowers" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>الإعجابات والتعليقات</strong>
+                                    <small class="text-muted d-block">إشعار عند الإعجاب بمنشوراتك أو التعليق عليها</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="emailLikesComments">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>النشرة الإخبارية</strong>
+                                    <small class="text-muted d-block">استقبال النشرة الإخبارية الأسبوعية</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="emailNewsletter" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Schedule -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-clock me-2"></i>
+                            جدولة الإشعارات
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>وضع عدم الإزعاج</strong>
+                                    <small class="text-muted d-block">إيقاف الإشعارات خلال ساعات معينة</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="doNotDisturb">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>من الساعة</strong>
+                                    <small class="text-muted d-block">بداية فترة عدم الإزعاج</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <input type="time" class="form-control" data-setting="dndStartTime" value="22:00" style="width: 120px;">
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>إلى الساعة</strong>
+                                    <small class="text-muted d-block">نهاية فترة عدم الإزعاج</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <input type="time" class="form-control" data-setting="dndEndTime" value="08:00" style="width: 120px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Frequency -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-line me-2"></i>
+                            تكرار الإشعارات
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تجميع الإشعارات</strong>
+                                    <small class="text-muted d-block">تجميع الإشعارات المتشابهة في إشعار واحد</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="groupNotifications" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تكرار الإشعارات</strong>
+                                    <small class="text-muted d-block">عدد مرات إرسال الإشعار للأحداث المهمة</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <select class="form-select" data-setting="notificationFrequency" style="width: 150px;">
+                                        <option value="once" selected>مرة واحدة</option>
+                                        <option value="twice">مرتان</option>
+                                        <option value="thrice">ثلاث مرات</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Appearance Settings Section -->
+                <section id="appearance-settings" class="settings-content-section card p-4">
+                    <h3 class="card-title mb-4"><i class="fas fa-paint-brush section-title-icon"></i> المظهر</h3>
+                    
+                    <!-- Theme Settings -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-palette me-2"></i>
+                            إعدادات المظهر
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>المظهر</strong>
+                                    <small class="text-muted d-block">اختيار مظهر التطبيق</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <div class="custom-radio">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="theme" id="lightTheme" value="light" checked>
+                                            <label class="form-check-label" for="lightTheme">فاتح</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="theme" id="darkTheme" value="dark">
+                                            <label class="form-check-label" for="darkTheme">مظلم</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="theme" id="autoTheme" value="auto">
+                                            <label class="form-check-label" for="autoTheme">تلقائي</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>اللون الأساسي</strong>
+                                    <small class="text-muted d-block">اختيار اللون الأساسي للتطبيق</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <div class="d-flex gap-2">
+                                        <div class="color-option" style="background-color: #7c4dff;" data-color="#7c4dff" title="بنفسجي"></div>
+                                        <div class="color-option" style="background-color: #2196f3;" data-color="#2196f3" title="أزرق"></div>
+                                        <div class="color-option" style="background-color: #4caf50;" data-color="#4caf50" title="أخضر"></div>
+                                        <div class="color-option" style="background-color: #ff9800;" data-color="#ff9800" title="برتقالي"></div>
+                                        <div class="color-option" style="background-color: #e91e63;" data-color="#e91e63" title="وردي"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>حجم الخط</strong>
+                                    <small class="text-muted d-block">تعديل حجم النص في التطبيق</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <div class="custom-slider">
+                                        <input type="range" class="form-range" min="12" max="20" value="16" data-setting="fontSize" data-unit="px">
+                                        <div class="slider-value">16px</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>كثافة المحتوى</strong>
+                                    <small class="text-muted d-block">تحديد مقدار المحتوى المعروض في الشاشة</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <select class="form-select" data-setting="contentDensity" style="width: 150px;">
+                                        <option value="compact">مضغوط</option>
+                                        <option value="normal" selected>عادي</option>
+                                        <option value="comfortable">مريح</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Display Settings -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-desktop me-2"></i>
+                            إعدادات العرض
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>عرض الصور تلقائياً</strong>
+                                    <small class="text-muted d-block">تحميل وعرض الصور تلقائياً في الخلاصة</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="autoLoadImages" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تشغيل الفيديو تلقائياً</strong>
+                                    <small class="text-muted d-block">تشغيل مقاطع الفيديو تلقائياً عند ظهورها</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="autoPlayVideos">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تقليل الحركة</strong>
+                                    <small class="text-muted d-block">تقليل الحركات والانميشنات في التطبيق</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="reduceMotion">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>عرض المحتوى الحساس</strong>
+                                    <small class="text-muted d-block">إظهار تحذير قبل عرض المحتوى الحساس</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="showSensitiveContent">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+        </div>    </div>
+
+    <!-- Bootstrap JS Bundle (Popper.js included) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="js/script.js"></script>
+    
+    <!-- إضافة الأنماط الديناميكية للتفاعلات المتقدمة -->
+    <style>
+    /* تأثير الموجة عند النقر */
+    .ripple-effect {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(0);
+        animation: ripple 0.6s linear;
+        pointer-events: none;
+    }
+
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+
+    /* نظام الإشعارات المتقدم */
+    .notifications-container {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 9999;
+        max-width: 400px;
+    }
+
+    .notification {
+        background: var(--bg-primary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-lg);
+        margin-bottom: var(--spacing-sm);
+        padding: var(--spacing-lg);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transform: translateX(-100%);
+        opacity: 0;
+        transition: all var(--transition-normal);
+    }
+
+    .notification.show {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    .notification.hide {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    .notification-success {
+        border-right: 4px solid var(--success-color);
+    }
+
+    .notification-error {
+        border-right: 4px solid var(--danger-color);
+    }
+
+    .notification-warning {
+        border-right: 4px solid var(--warning-color);
+    }
+
+    .notification-info {
+        border-right: 4px solid var(--info-color);
+    }
+
+    .notification-content {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+    }
+
+    .notification-close {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: var(--spacing-xs);
+        border-radius: var(--border-radius);
+        transition: all var(--transition-fast);
+    }
+
+    .notification-close:hover {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+    }
+
+    /* حالات التحميل المتقدمة */
+    .loading {
+        position: relative;
+        pointer-events: none;
+        opacity: 0.7;
+    }
+
+    .loading::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        animation: loading-shimmer 1.5s infinite;
+    }
+
+    @keyframes loading-shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    /* تحسينات إمكانية الوصول */
+    .high-contrast {
+        --text-primary: #000000;
+        --text-secondary: #333333;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f0f0f0;
+        --border-color: #000000;
+    }
+
+    .reduce-motion * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .large-buttons .btn {
+        min-height: 48px;
+        padding: var(--spacing-lg) var(--spacing-xl);
+        font-size: var(--font-size-lg);
+    }
+
+    /* كثافة المحتوى */
+    .density-compact {
+        --spacing-sm: 0.25rem;
+        --spacing-md: 0.5rem;
+        --spacing-lg: 0.75rem;
+    }
+
+    .density-comfortable {
+        --spacing-sm: 0.75rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2rem;
+    }
+
+    /* تأثيرات الحركة المتقدمة */
+    .animate-in {
+        animation: slideInUp 0.6s ease-out;
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* زر القائمة للهواتف */
+    .mobile-menu-toggle {
+        border-radius: 50% !important;
+        width: 50px;
+        height: 50px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* تحسينات الشريط الجانبي للهواتف */
+    @media (max-width: 992px) {
+        .sidebar.mobile {
+            transform: translateX(100%);
+        }
+        
+        .sidebar.mobile.show {
+            transform: translateX(0);
+        }
+    }
+
+    /* تأثيرات التفاعل المتقدمة */
+    .settings-item:hover {
+        background: var(--bg-secondary);
+        margin: 0 calc(-1 * var(--spacing-lg));
+        padding-left: var(--spacing-lg);
+        padding-right: var(--spacing-lg);
+        border-radius: var(--border-radius);
+        transform: translateX(-2px);
+    }
+
+    .nav-link:hover {
+        transform: translateX(-2px);
+    }
+
+    .btn:hover {
+        transform: translateY(-1px);
+    }
+
+    .color-option:hover {
+        transform: scale(1.1);
+    }
+
+    .toggle-switch:hover .slider {
+        box-shadow: var(--shadow);
+    }
+
+    /* تأثيرات النقر */
+    .btn:active {
+        transform: translateY(0);
+    }
+
+    .settings-item.updated {
+        animation: highlight 2s ease-out;
+    }
+
+    @keyframes highlight {
+        0% { background: rgba(124, 77, 255, 0.2); }
+        100% { background: transparent; }
+    }
+
+    /* تحسينات شريط التمرير */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--border-color);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--text-muted);
+    }
+
+    /* Firefox */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--border-color) var(--bg-secondary);
+    }
+
+    /* تأثيرات إضافية للبطاقات */
+    .settings-section-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* تأثير النبض للعناصر المهمة */
+    .pulse {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+
+    /* تأثير الاهتزاز للأخطاء */
+    .shake {
+        animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+
+    /* تأثير التدوير للتحميل */
+    .spin {
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* تحسينات الأداء */
+    .settings-content-section,
+    .settings-section-card,
+    .nav-link,
+    .btn {
+        will-change: transform, opacity;
+    }
+
+    /* تحسين الخطوط */
+    .sidebar-header,
+    .content-header h1,
+    .card-title {
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* حالات خاصة للعناصر */
+    .settings-item.loading {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    .settings-item.error {
+        background: rgba(244, 67, 54, 0.05);
+        border-color: var(--danger-color);
+    }
+
+    .settings-item.success {
+        background: rgba(76, 175, 80, 0.05);
+        border-color: var(--success-color);
+    }
+
+    /* تأثير الموجة للعناصر التفاعلية */
+    .ripple {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ripple::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .ripple:active::before {
+        width: 300px;
+        height: 300px;
+    }
+
+    /* تحسين التفاعل مع العناصر */
+    .interactive {
+        cursor: pointer;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* تحسين الانتقالات */
+    .smooth-transition {
+        transition: all var(--transition-normal);
+    }
+
+    /* تأثيرات خاصة للمظهر المظلم */
+    [data-theme="dark"] .notification {
+        background: var(--bg-dark-secondary);
+        border-color: var(--border-dark);
+        color: var(--text-dark-primary);
+    }
+
+    [data-theme="dark"] .loading::after {
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    }
+
+    /* تحسينات للطباعة */
+    @media print {
+        .sidebar,
+        .modal,
+        .btn,
+        .nav-link,
+        .notifications-container {
+            display: none !important;
+        }
+        
+        .main-content {
+            margin-right: 0 !important;
+        }
+        
+        .settings-content-section {
+            display: block !important;
+            page-break-inside: avoid;
+        }
+        
+        .settings-section-card {
+            box-shadow: none;
+            border: 1px solid #000;
+        }
+    }
+    </style>
+
+</body>
+</html>
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-image me-2"></i>
+                            جودة الوسائط
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>جودة تحميل الصور</strong>
+                                    <small class="text-muted d-block">اختيار جودة الصور عند التحميل</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <select class="form-select" data-setting="imageUploadQuality" style="width: 150px;">
+                                        <option value="low">منخفضة</option>
+                                        <option value="medium" selected>متوسطة</option>
+                                        <option value="high">عالية</option>
+                                        <option value="original">أصلية</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>جودة تحميل الفيديو</strong>
+                                    <small class="text-muted d-block">اختيار جودة الفيديو عند التحميل</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <select class="form-select" data-setting="videoUploadQuality" style="width: 150px;">
+                                        <option value="480p">480p</option>
+                                        <option value="720p" selected>720p</option>
+                                        <option value="1080p">1080p</option>
+                                        <option value="4k">4K</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>ضغط الوسائط</strong>
+                                    <small class="text-muted d-block">ضغط الوسائط لتوفير مساحة التخزين</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="compressMedia" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Storage Management -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-hdd me-2"></i>
+                            إدارة التخزين
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span>المساحة المستخدمة</span>
+                                    <span class="text-primary">2.4 جيجابايت من 5 جيجابايت</span>
+                                </div>
+                                <div class="progress" style="height: 10px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 48%" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تنظيف التخزين المؤقت</strong>
+                                    <small class="text-muted d-block">حذف الملفات المؤقتة لتوفير مساحة</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <button class="btn btn-outline-secondary btn-sm" onclick="clearCache()">
+                                        <i class="fas fa-broom me-1"></i>
+                                        تنظيف
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>حذف الوسائط القديمة</strong>
+                                    <small class="text-muted d-block">حذف الوسائط الأقدم من 30 يوماً تلقائياً</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="autoDeleteOldMedia">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>النسخ الاحتياطي للوسائط</strong>
+                                    <small class="text-muted d-block">نسخ احتياطي تلقائي للصور والفيديوهات</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="mediaBackup" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Download Settings -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-download me-2"></i>
+                            إعدادات التحميل
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>التحميل التلقائي على WiFi</strong>
+                                    <small class="text-muted d-block">تحميل الوسائط تلقائياً عند الاتصال بـ WiFi</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="autoDownloadWifi" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>التحميل التلقائي على البيانات</strong>
+                                    <small class="text-muted d-block">تحميل الوسائط تلقائياً عند استخدام بيانات الهاتف</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="autoDownloadMobile">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>مجلد التحميل</strong>
+                                    <small class="text-muted d-block">اختيار مجلد حفظ الملفات المحملة</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <button class="btn btn-outline-secondary btn-sm" onclick="selectDownloadFolder()">
+                                        <i class="fas fa-folder me-1"></i>
+                                        اختيار
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Language & Region Settings Section -->
+                <section id="language-region-settings" class="settings-content-section card p-4">
+                    <h3 class="card-title mb-4"><i class="fas fa-globe section-title-icon"></i> اللغة والمنطقة</h3>
+                    
+                    <!-- Language Settings -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-language me-2"></i>
+                            إعدادات اللغة
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>لغة التطبيق</strong>
+                                    <small class="text-muted d-block">اختيار لغة واجهة التطبيق</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <select class="form-select" data-setting="appLanguage" style="width: 200px;">
+                                        <option value="ar" selected>العربية</option>
+                                        <option value="en">English</option>
+                                        <option value="fr">Français</option>
+                                        <option value="es">Español</option>
+                                        <option value="de">Deutsch</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>اتجاه النص</strong>
+                                    <small class="text-muted d-block">تحديد اتجاه النص في التطبيق</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <div class="custom-radio">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="textDirection" id="rtl" value="rtl" checked>
+                                            <label class="form-check-label" for="rtl">من اليمين لليسار</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="textDirection" id="ltr" value="ltr">
+                                            <label class="form-check-label" for="ltr">من اليسار لليمين</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>الترجمة التلقائية</strong>
+                                    <small class="text-muted d-block">ترجمة المنشورات بلغات أخرى تلقائياً</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="autoTranslate" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Region Settings -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            إعدادات المنطقة
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>البلد/المنطقة</strong>
+                                    <small class="text-muted d-block">تحديد بلدك أو منطقتك</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <select class="form-select" data-setting="country" style="width: 200px;">
+                                        <option value="SA" selected>المملكة العربية السعودية</option>
+                                        <option value="AE">الإمارات العربية المتحدة</option>
+                                        <option value="EG">مصر</option>
+                                        <option value="JO">الأردن</option>
+                                        <option value="LB">لبنان</option>
+                                        <option value="MA">المغرب</option>
+                                        <option value="TN">تونس</option>
+                                        <option value="US">الولايات المتحدة</option>
+                                        <option value="GB">المملكة المتحدة</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>المنطقة الزمنية</strong>
+                                    <small class="text-muted d-block">تحديد المنطقة الزمنية الخاصة بك</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <select class="form-select" data-setting="timezone" style="width: 250px;">
+                                        <option value="Asia/Riyadh" selected>توقيت الرياض (GMT+3)</option>
+                                        <option value="Asia/Dubai">توقيت دبي (GMT+4)</option>
+                                        <option value="Africa/Cairo">توقيت القاهرة (GMT+2)</option>
+                                        <option value="Asia/Amman">توقيت عمان (GMT+3)</option>
+                                        <option value="Asia/Beirut">توقيت بيروت (GMT+2)</option>
+                                        <option value="Africa/Casablanca">توقيت الدار البيضاء (GMT+1)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تنسيق التاريخ</strong>
+                                    <small class="text-muted d-block">اختيار تنسيق عرض التاريخ</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <select class="form-select" data-setting="dateFormat" style="width: 200px;">
+                                        <option value="dd/mm/yyyy" selected>يوم/شهر/سنة</option>
+                                        <option value="mm/dd/yyyy">شهر/يوم/سنة</option>
+                                        <option value="yyyy-mm-dd">سنة-شهر-يوم</option>
+                                        <option value="dd-mm-yyyy">يوم-شهر-سنة</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تنسيق الوقت</strong>
+                                    <small class="text-muted d-block">اختيار تنسيق عرض الوقت</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <div class="custom-radio">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="timeFormat" id="time12" value="12" checked>
+                                            <label class="form-check-label" for="time12">12 ساعة</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="timeFormat" id="time24" value="24">
+                                            <label class="form-check-label" for="time24">24 ساعة</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Currency Settings -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-coins me-2"></i>
+                            إعدادات العملة
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>العملة المفضلة</strong>
+                                    <small class="text-muted d-block">اختيار العملة لعرض الأسعار</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <select class="form-select" data-setting="currency" style="width: 200px;">
+                                        <option value="SAR" selected>ريال سعودي (SAR)</option>
+                                        <option value="AED">درهم إماراتي (AED)</option>
+                                        <option value="EGP">جنيه مصري (EGP)</option>
+                                        <option value="JOD">دينار أردني (JOD)</option>
+                                        <option value="USD">دولار أمريكي (USD)</option>
+                                        <option value="EUR">يورو (EUR)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Accessibility Settings Section -->
+                <section id="accessibility-settings" class="settings-content-section card p-4">
+                    <h3 class="card-title mb-4"><i class="fas fa-universal-access section-title-icon"></i> إمكانية الوصول</h3>
+                    
+                    <!-- Visual Accessibility -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-eye me-2"></i>
+                            إمكانية الوصول البصرية
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تباين عالي</strong>
+                                    <small class="text-muted d-block">زيادة التباين لتحسين الرؤية</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="highContrast">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>حجم الخط الكبير</strong>
+                                    <small class="text-muted d-block">استخدام خط أكبر لسهولة القراءة</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="largeText">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تكبير الخط</strong>
+                                    <small class="text-muted d-block">تعديل حجم الخط حسب الحاجة</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <div class="custom-slider">
+                                        <input type="range" class="form-range" min="100" max="200" value="100" data-setting="fontScale" data-unit="%">
+                                        <div class="slider-value">100%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>النص البديل للصور</strong>
+                                    <small class="text-muted d-block">عرض وصف نصي للصور</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="altText" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Motor Accessibility -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-hand-paper me-2"></i>
+                            إمكانية الوصول الحركية
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>أزرار أكبر</strong>
+                                    <small class="text-muted d-block">جعل الأزرار أكبر حجماً لسهولة الضغط</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="largeButtons">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تأخير اللمس</strong>
+                                    <small class="text-muted d-block">زيادة الوقت المطلوب للضغط على العناصر</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <select class="form-select" data-setting="touchDelay" style="width: 150px;">
+                                        <option value="normal" selected>عادي</option>
+                                        <option value="long">طويل</option>
+                                        <option value="longer">أطول</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>التنقل بلوحة المفاتيح</strong>
+                                    <small class="text-muted d-block">تمكين التنقل باستخدام لوحة المفاتيح</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="keyboardNavigation" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Audio Accessibility -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-volume-up me-2"></i>
+                            إمكانية الوصول الصوتية
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>قارئ الشاشة</strong>
+                                    <small class="text-muted d-block">تمكين قارئ الشاشة للمحتوى</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="screenReader">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>التنبيهات الصوتية</strong>
+                                    <small class="text-muted d-block">تشغيل أصوات للتنبيهات والإشعارات</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="audioAlerts" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>النسخ النصية للفيديو</strong>
+                                    <small class="text-muted d-block">عرض النسخ النصية لمقاطع الفيديو</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" data-setting="videoTranscripts" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Help & Support Settings Section -->
+                <section id="help-support-settings" class="settings-content-section card p-4">
+                    <h3 class="card-title mb-4"><i class="fas fa-question-circle section-title-icon"></i> المساعدة والدعم</h3>
+                    
+                    <!-- Help Resources -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-book me-2"></i>
+                            مصادر المساعدة
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-question-circle text-primary me-3"></i>
+                                        <div>
+                                            <strong>الأسئلة الشائعة</strong>
+                                            <small class="text-muted d-block">إجابات للأسئلة الأكثر شيوعاً</small>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                                
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-book-open text-primary me-3"></i>
+                                        <div>
+                                            <strong>دليل المستخدم</strong>
+                                            <small class="text-muted d-block">دليل شامل لاستخدام التطبيق</small>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                                
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-video text-primary me-3"></i>
+                                        <div>
+                                            <strong>فيديوهات تعليمية</strong>
+                                            <small class="text-muted d-block">شروحات مرئية لميزات التطبيق</small>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                                
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-users text-primary me-3"></i>
+                                        <div>
+                                            <strong>منتدى المجتمع</strong>
+                                            <small class="text-muted d-block">تفاعل مع مستخدمين آخرين</small>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Support -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-headset me-2"></i>
+                            التواصل مع الدعم
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-envelope text-success me-3"></i>
+                                        <div>
+                                            <strong>البريد الإلكتروني</strong>
+                                            <small class="text-muted d-block">support@example.com</small>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                                
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-comments text-info me-3"></i>
+                                        <div>
+                                            <strong>الدردشة المباشرة</strong>
+                                            <small class="text-muted d-block">متاح من 9 صباحاً إلى 6 مساءً</small>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-success">متاح</span>
+                                </a>
+                                
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-phone text-warning me-3"></i>
+                                        <div>
+                                            <strong>الهاتف</strong>
+                                            <small class="text-muted d-block">+966-11-123-4567</small>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feedback -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-star me-2"></i>
+                            التقييم والملاحظات
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تقييم التطبيق</strong>
+                                    <small class="text-muted d-block">قيم تجربتك مع التطبيق</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="rateApp()">
+                                        <i class="fas fa-star me-1"></i>
+                                        تقييم
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>إرسال ملاحظات</strong>
+                                    <small class="text-muted d-block">شاركنا آرائك واقتراحاتك</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+                                        <i class="fas fa-comment me-1"></i>
+                                        إرسال
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>الإبلاغ عن مشكلة</strong>
+                                    <small class="text-muted d-block">أبلغ عن أي مشاكل تقنية</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#reportIssueModal">
+                                        <i class="fas fa-bug me-1"></i>
+                                        إبلاغ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- About App Settings Section -->
+                <section id="about-app-settings" class="settings-content-section card p-4">
+                    <h3 class="card-title mb-4"><i class="fas fa-info-circle section-title-icon"></i> حول التطبيق</h3>
+                    
+                    <!-- App Information -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-mobile-alt me-2"></i>
+                            معلومات التطبيق
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center mb-4">
+                                <i class="fas fa-twitter fa-4x text-primary mb-3"></i>
+                                <h4>تطبيق التواصل الاجتماعي</h4>
+                                <p class="text-muted">الإصدار 2.1.0</p>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>الإصدار الحالي</strong>
+                                </div>
+                                <div class="settings-item-control">
+                                    <span class="text-muted">2.1.0</span>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>تاريخ الإصدار</strong>
+                                </div>
+                                <div class="settings-item-control">
+                                    <span class="text-muted">15 مارس 2024</span>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>حجم التطبيق</strong>
+                                </div>
+                                <div class="settings-item-control">
+                                    <span class="text-muted">45.2 ميجابايت</span>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>التحقق من التحديثات</strong>
+                                    <small class="text-muted d-block">البحث عن إصدارات جديدة</small>
+                                </div>
+                                <div class="settings-item-control">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="checkForUpdates()">
+                                        <i class="fas fa-sync me-1"></i>
+                                        تحقق
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Legal Information -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-gavel me-2"></i>
+                            المعلومات القانونية
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-file-contract text-primary me-3"></i>
+                                        <span>شروط الاستخدام</span>
+                                    </div>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                                
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-shield-alt text-primary me-3"></i>
+                                        <span>سياسة الخصوصية</span>
+                                    </div>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                                
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-cookie-bite text-primary me-3"></i>
+                                        <span>سياسة ملفات تعريف الارتباط</span>
+                                    </div>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                                
+                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-balance-scale text-primary me-3"></i>
+                                        <span>التراخيص مفتوحة المصدر</span>
+                                    </div>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Developer Information -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-code me-2"></i>
+                            معلومات المطور
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>الشركة المطورة</strong>
+                                </div>
+                                <div class="settings-item-control">
+                                    <span class="text-muted">شركة التقنيات المتقدمة</span>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>الموقع الإلكتروني</strong>
+                                </div>
+                                <div class="settings-item-control">
+                                    <a href="https://example.com" class="text-primary">www.example.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-item">
+                                <div class="settings-item-label">
+                                    <strong>البريد الإلكتروني</strong>
+                                </div>
+                                <div class="settings-item-control">
+                                    <a href="mailto:info@example.com" class="text-primary">info@example.com</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Media -->
+                    <div class="settings-section-card card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-share-alt me-2"></i>
+                            وسائل التواصل الاجتماعي
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center gap-3">
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-twitter"></i>
+                                    تويتر
+                                </a>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-facebook"></i>
+                                    فيسبوك
+                                </a>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-instagram"></i>
+                                    إنستغرام
+                                </a>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fab fa-linkedin"></i>
+                                    لينكدإن
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Change Password Modal -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changePasswordModalLabel">تغيير كلمة المرور</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="changePasswordForm">
+                        <div class="mb-3">
+                            <label for="currentPassword" class="form-label">كلمة المرور الحالية</label>
+                            <input type="password" class="form-control" id="currentPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">كلمة المرور الجديدة</label>
+                            <input type="password" class="form-control" id="newPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">تأكيد كلمة المرور الجديدة</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-primary" onclick="changePassword()">حفظ التغييرات</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Sessions Modal -->
+    <div class="modal fade" id="activeSessionsModal" tabindex="-1" aria-labelledby="activeSessionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="activeSessionsModalLabel">الجلسات النشطة</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group">
+                        <div class="list-group-item d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">الجلسة الحالية</h6>
+                                <p class="mb-1">Chrome على Windows 10</p>
+                                <small class="text-success">نشط الآن</small>
+                            </div>
+                            <span class="badge bg-success">حالي</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">جلسة أخرى</h6>
+                                <p class="mb-1">Safari على iPhone</p>
+                                <small class="text-muted">آخر نشاط: منذ ساعتين</small>
+                            </div>
+                            <button class="btn btn-outline-danger btn-sm">إنهاء</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="endAllSessions()">إنهاء جميع الجلسات الأخرى</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="deleteAccountModalLabel">حذف الحساب</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>تحذير:</strong> هذا الإجراء لا يمكن التراجع عنه. سيتم حذف حسابك وجميع بياناتك نهائياً.
+                    </div>
+                    <p>لتأكيد حذف الحساب، يرجى كتابة "حذف حسابي" في المربع أدناه:</p>
+                    <input type="text" class="form-control" id="deleteConfirmation" placeholder="حذف حسابي">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteAccount()">حذف الحساب نهائياً</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="feedbackModalLabel">إرسال ملاحظات</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="feedbackForm">
+                        <div class="mb-3">
+                            <label for="feedbackType" class="form-label">نوع الملاحظة</label>
+                            <select class="form-select" id="feedbackType" required>
+                                <option value="">اختر نوع الملاحظة</option>
+                                <option value="suggestion">اقتراح</option>
+                                <option value="complaint">شكوى</option>
+                                <option value="compliment">إطراء</option>
+                                <option value="other">أخرى</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="feedbackMessage" class="form-label">الرسالة</label>
+                            <textarea class="form-control" id="feedbackMessage" rows="4" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-primary" onclick="sendFeedback()">إرسال</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Issue Modal -->
+    <div class="modal fade" id="reportIssueModal" tabindex="-1" aria-labelledby="reportIssueModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reportIssueModalLabel">الإبلاغ عن مشكلة</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="reportIssueForm">
+                        <div class="mb-3">
+                            <label for="issueType" class="form-label">نوع المشكلة</label>
+                            <select class="form-select" id="issueType" required>
+                                <option value="">اختر نوع المشكلة</option>
+                                <option value="bug">خطأ في التطبيق</option>
+                                <option value="performance">مشكلة في الأداء</option>
+                                <option value="ui">مشكلة في الواجهة</option>
+                                <option value="login">مشكلة في تسجيل الدخول</option>
+                                <option value="other">أخرى</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="issueDescription" class="form-label">وصف المشكلة</label>
+                            <textarea class="form-control" id="issueDescription" rows="4" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="issueSteps" class="form-label">خطوات إعادة إنتاج المشكلة</label>
+                            <textarea class="form-control" id="issueSteps" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-danger" onclick="reportIssue()">إرسال البلاغ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle (Popper.js included) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="static/js/settings.js"></script>
+

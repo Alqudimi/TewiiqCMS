@@ -6,6 +6,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../controllers/AuthController.php';
 require_once __DIR__ . '/../controllers/HomeController.php';
 require_once __DIR__ . '/../controllers/ProfileController.php';
+require_once __DIR__ . '/../controllers/TweetDetailController.php';
+require_once __DIR__ . '/../controllers/SearchController.php';
+require_once __DIR__ . '/../controllers/SettingsController.php';
+require_once __DIR__ . '/../controllers/ListController.php';
+require_once __DIR__ . '/../controllers/EventController.php';
 
 // Set cache control headers
 header('Cache-Control: no-cache, no-store, must-revalidate');
@@ -78,6 +83,161 @@ try {
         case $path === '/unfollow' && $requestMethod === 'POST':
             $controller = new ProfileController();
             $controller->unfollow();
+            break;
+
+        // Tweet Detail routes
+        case preg_match('/^\/tweet\/(\d+)$/', $path, $matches):
+            $controller = new TweetDetailController();
+            $controller->show($matches[1]);
+            break;
+            
+        case preg_match('/^\/tweet\/(\d+)\/reply$/', $path, $matches) && $requestMethod === 'POST':
+            $controller = new TweetDetailController();
+            $controller->reply();
+            break;
+            
+        case $path === '/reply/like' && $requestMethod === 'POST':
+            $controller = new TweetDetailController();
+            $controller->likeReply();
+            break;
+
+        // Search routes
+        case $path === '/search':
+            $controller = new SearchController();
+            $controller->index();
+            break;
+            
+        case $path === '/search/suggest':
+            $controller = new SearchController();
+            $controller->suggest();
+            break;
+            
+        case $path === '/search/trends':
+            $controller = new SearchController();
+            $controller->trends();
+            break;
+
+        // Settings routes
+        case $path === '/settings':
+            $controller = new SettingsController();
+            $controller->index();
+            break;
+            
+        case $path === '/settings/profile' && $requestMethod === 'POST':
+            $controller = new SettingsController();
+            $controller->updateProfile();
+            break;
+            
+        case $path === '/settings/password' && $requestMethod === 'POST':
+            $controller = new SettingsController();
+            $controller->updatePassword();
+            break;
+            
+        case $path === '/settings/privacy' && $requestMethod === 'POST':
+            $controller = new SettingsController();
+            $controller->updatePrivacy();
+            break;
+            
+        case $path === '/settings/notifications' && $requestMethod === 'POST':
+            $controller = new SettingsController();
+            $controller->updateNotifications();
+            break;
+            
+        case $path === '/settings/appearance' && $requestMethod === 'POST':
+            $controller = new SettingsController();
+            $controller->updateAppearance();
+            break;
+            
+        case $path === '/settings/api':
+            $controller = new SettingsController();
+            $controller->getSettings();
+            break;
+
+        // Lists routes
+        case $path === '/lists':
+            $controller = new ListController();
+            $controller->index();
+            break;
+            
+        case preg_match('/^\/lists\/(\d+)$/', $path, $matches):
+            $controller = new ListController();
+            $controller->show($matches[1]);
+            break;
+            
+        case $path === '/lists/create' && $requestMethod === 'POST':
+            $controller = new ListController();
+            $controller->create();
+            break;
+            
+        case preg_match('/^\/lists\/(\d+)\/update$/', $path, $matches) && $requestMethod === 'POST':
+            $controller = new ListController();
+            $controller->update($matches[1]);
+            break;
+            
+        case preg_match('/^\/lists\/(\d+)\/delete$/', $path, $matches) && $requestMethod === 'POST':
+            $controller = new ListController();
+            $controller->delete($matches[1]);
+            break;
+            
+        case preg_match('/^\/lists\/(\d+)\/join$/', $path, $matches) && $requestMethod === 'POST':
+            $controller = new ListController();
+            $controller->join($matches[1]);
+            break;
+            
+        case preg_match('/^\/lists\/(\d+)\/leave$/', $path, $matches) && $requestMethod === 'POST':
+            $controller = new ListController();
+            $controller->leave($matches[1]);
+            break;
+            
+        case preg_match('/^\/lists\/(\d+)\/members\/add$/', $path, $matches) && $requestMethod === 'POST':
+            $controller = new ListController();
+            $controller->addMember($matches[1]);
+            break;
+            
+        case preg_match('/^\/lists\/(\d+)\/members\/(\d+)\/remove$/', $path, $matches) && $requestMethod === 'POST':
+            $controller = new ListController();
+            $controller->removeMember($matches[1], $matches[2]);
+            break;
+
+        // Events routes
+        case $path === '/events':
+            $controller = new EventController();
+            $controller->index();
+            break;
+            
+        case preg_match('/^\/events\/(\d+)$/', $path, $matches):
+            $controller = new EventController();
+            $controller->show($matches[1]);
+            break;
+            
+        case $path === '/events/create' && $requestMethod === 'POST':
+            $controller = new EventController();
+            $controller->create();
+            break;
+            
+        case preg_match('/^\/events\/(\d+)\/join$/', $path, $matches) && $requestMethod === 'POST':
+            $controller = new EventController();
+            $controller->join($matches[1]);
+            break;
+            
+        case preg_match('/^\/events\/(\d+)\/leave$/', $path, $matches) && $requestMethod === 'POST':
+            $controller = new EventController();
+            $controller->leave($matches[1]);
+            break;
+            
+        case preg_match('/^\/events\/(\d+)\/live$/', $path, $matches) && $requestMethod === 'POST':
+            $controller = new EventController();
+            $controller->updateLiveStatus($matches[1]);
+            break;
+            
+        case $path === '/events/live':
+            $controller = new EventController();
+            $controller->getLiveEvents();
+            break;
+            
+        case $path === '/events/search':
+            $controller = new EventController();
+            $controller->search();
             break;
             
         // Static files (uploads)

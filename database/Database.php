@@ -90,6 +90,110 @@ class Database
             R::store($session);
             R::trash($session);
             
+            // Create replies table
+            $reply = R::dispense('replies');
+            $reply->tweet_id = 1;
+            $reply->user_id = 1;
+            $reply->content = 'Test reply';
+            $reply->image_url = null;
+            $reply->likes_count = 0;
+            $reply->replies_count = 0;
+            $reply->created_at = date('Y-m-d H:i:s');
+            $reply->updated_at = date('Y-m-d H:i:s');
+            R::store($reply);
+            R::trash($reply);
+            
+            // Create reply_likes table
+            $replyLike = R::dispense('replylikes');
+            $replyLike->reply_id = 1;
+            $replyLike->user_id = 1;
+            $replyLike->created_at = date('Y-m-d H:i:s');
+            R::store($replyLike);
+            R::trash($replyLike);
+            
+            // Create tweet_lists table
+            $list = R::dispense('tweet_lists');
+            $list->user_id = 1;
+            $list->name = 'Test List';
+            $list->description = 'Test list description';
+            $list->is_private = false;
+            $list->cover_image = null;
+            $list->members_count = 0;
+            $list->created_at = date('Y-m-d H:i:s');
+            $list->updated_at = date('Y-m-d H:i:s');
+            R::store($list);
+            R::trash($list);
+            
+            // Create list_members table
+            $listMember = R::dispense('list_members');
+            $listMember->list_id = 1;
+            $listMember->user_id = 1;
+            $listMember->created_at = date('Y-m-d H:i:s');
+            R::store($listMember);
+            R::trash($listMember);
+            
+            // Create events table
+            $event = R::dispense('events');
+            $event->user_id = 1;
+            $event->title = 'Test Event';
+            $event->description = 'Test event description';
+            $event->event_type = 'general';
+            $event->start_time = date('Y-m-d H:i:s', strtotime('+1 hour'));
+            $event->end_time = date('Y-m-d H:i:s', strtotime('+2 hours'));
+            $event->is_live = false;
+            $event->image_url = null;
+            $event->participants_count = 0;
+            $event->location = null;
+            $event->hashtags = '';
+            $event->created_at = date('Y-m-d H:i:s');
+            $event->updated_at = date('Y-m-d H:i:s');
+            R::store($event);
+            R::trash($event);
+            
+            // Create event_participants table
+            $participant = R::dispense('event_participants');
+            $participant->event_id = 1;
+            $participant->user_id = 1;
+            $participant->joined_at = date('Y-m-d H:i:s');
+            R::store($participant);
+            R::trash($participant);
+            
+            // Create user_settings table
+            $settings = R::dispense('user_settings');
+            $settings->user_id = 1;
+            $settings->profile_visibility = 'public';
+            $settings->tweet_privacy = 'public';
+            $settings->message_privacy = 'everyone';
+            $settings->tagging_permission = 'everyone';
+            $settings->location_sharing = false;
+            $settings->photo_tagging = true;
+            $settings->search_by_email = true;
+            $settings->search_by_phone = true;
+            $settings->email_notifications = true;
+            $settings->push_notifications = true;
+            $settings->sms_notifications = false;
+            $settings->like_notifications = true;
+            $settings->reply_notifications = true;
+            $settings->follow_notifications = true;
+            $settings->mention_notifications = true;
+            $settings->retweet_notifications = true;
+            $settings->message_notifications = true;
+            $settings->theme = 'light';
+            $settings->font_size = 'medium';
+            $settings->language = 'ar';
+            $settings->timezone = 'Asia/Riyadh';
+            $settings->autoplay_videos = true;
+            $settings->data_saver = false;
+            $settings->high_quality_images = true;
+            $settings->sensitive_content = false;
+            $settings->two_factor_auth = false;
+            $settings->login_verification = true;
+            $settings->password_reset_email = true;
+            $settings->created_at = date('Y-m-d H:i:s');
+            $settings->updated_at = date('Y-m-d H:i:s');
+            R::store($settings);
+            R::trash($settings);
+            
         } catch (Exception $e) {
             error_log("Error creating tables: " . $e->getMessage());
         }

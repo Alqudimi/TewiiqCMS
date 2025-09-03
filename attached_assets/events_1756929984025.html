@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الفعاليات الحية | تطبيق تويتري</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* نظام الألوان للوضع الفاتح */
+            --primary: #7c4dff;
+            --secondary: #ff6e6c;
+            --accent: #2ce0c8;
+            --background: #f8f9fa;
+            --text: #2d3748;
+            --card: #ffffff;
+            --input: #f1f3f4;
+            --border: #e2e8f0;
+
+            /* نظام الألوان للوضع المظلم */
+            --primary-dark: #9370ff;
+            --secondary-dark: #ff8c8a;
+            --accent-dark: #3af0da;
+            --background-dark: #1a202c;
+            --text-dark: #e2e8f0;
+            --card-dark: #2d3748;
+            --input-dark: #4a5568;
+            --border-dark: #4a5568;
+
+            --border-radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+            --box-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        /* تطبيق نظام الألوان */
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            transition: var(--transition);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --accent: var(--accent-dark);
+            --background: var(--background-dark);
+            --text: var(--text-dark);
+            --card: var(--card-dark);
+            --input: var(--input-dark);
+            --border: var(--border-dark);
+        }
+
+        /* تخصيص Bootstrap */
+        .bg-primary {
+            background-color: var(--primary) !important;
+        }
+
+        .text-primary {
+            color: var(--primary) !important;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            opacity: 0.9;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(124, 77, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover, .btn-secondary:focus {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+            opacity: 0.9;
+            color: white;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: #2d3748;
+        }
+
+        .btn-accent:hover, .btn-accent:focus {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            opacity: 0.9;
+            color: #2d3748;
+        }
+
+        .card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            box-shadow: var(--box-shadow-hover);
+            transform: translateY(-5px);
+        }
+
+        .form-control, .form-select {
+            background-color: var(--input);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            padding: 0.75rem 1rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: var(--input);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(124, 77, 255, 0.25);
+            color: var(--text);
+        }
+
+        /* تخطيط الصفحة */
+        .events-container {
+            min-height: 100vh;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: var(--background);
+        }
+
+        /* شريط الفعاليات الحية */
+        .live-events-bar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 0.75rem 1rem;
+            overflow-x: auto;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .live-events-bar::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .live-events-bar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        .live-event-pill {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            margin-left: 0.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .live-event-pill:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .live-indicator {
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+            margin-left: 0.5rem;
+            animation: pulse 1.5s infinite;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        /* شبكة الفعاليات */
+        .events-grid {
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .event-card {
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .event-image {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .event-card:hover .event-image {
+            transform: scale(1.05);
+        }
+
+        .event-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.35rem 0.85rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-badge.live {
+            background-color: #ff4d4d;
+            animation: pulse 2s infinite;
+        }
+
+        .event-badge.ended {
+            background-color: var(--text);
+            opacity: 0.7;
+        }
+
+        .event-content {
+            padding: 1.25rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-title {
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-size: 1.1rem;
+            line-height: 1.4;
+            color: var(--text);
+        }
+
+        .event-host {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .host-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 0.75rem;
+            border: 2px solid var(--border);
+        }
+
+        .event-description {
+            color: var(--text);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-size: 0.95rem;
+        }
+
+        .event-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            font-size: 0.85rem;
+            color: var(--text);
+            opacity: 0.8;
+        }
+
+        .participants-count {
+            display: flex;
+            align-items: center;
+            background-color: var(--input);
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+        }
+
+        /* فلتر الفعاليات */
+        .events-filter {
+            padding: 1.25rem 1.5rem;
+            background-color: var(--card);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 61px;
+            z-index: 90;
+            backdrop-filter: blur(10px);
+            background-color: rgba(var(--card-rgb), 0.95);
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .filter-options::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .filter-options::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .filter-option {
+            padding: 0.6rem 1.1rem;
+            background-color: var(--input);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            border: 1px solid transparent;
+        }
+
+        .filter-option:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .filter-option.active {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(124, 77, 255, 0.3);
+        }
+
+        /* مشغل الوسائط */
+        .media-player-container {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            background-color: var(--card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-hover);
+            padding: 1.25rem;
+            z-index: 1000;
+            display: none;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .media-player-container.expanded {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-radius: 0;
+            z-index: 2000;
+            padding: 1.5rem;
+        }
+
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .player-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--text);
+            margin: 0;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .control-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--input);
+            color: var(--text);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+
+        .control-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(124, 77, 255, 0.3);
+        }
+
+        .player-main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: #000;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background: linear-gradient(135deg, #3a3a3a 0%, #1a1a1a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .player-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex: 0 0 auto;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background-color: var(--input);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress-fill {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            width: 30%;
+            border-radius: 5px;
+        }
+
+        .progress-time {
+            font-size: 0.8rem;
+            color: var(--text);
+            opacity: 0.8;
+            min-width: 80px;
+            text-align: left;
+        }
+
+        /* لوحة التحكم */
+        .control-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 340px;
+            background-color: var(--card);
+            border-left: 1px solid var(--border);
+            padding: 1.5rem;
+            overflow-y: auto;
+            z-index: 1500;
+            transform: translateX(100%);
+            transition: var(--transition);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .control-panel.show {
+            transform: translateX(0);
+        }
+
+        .participant-list {
+            margin-top: 1.25rem;
+        }
+
+        .participant-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 0.75rem;
+            transition: var(--transition);
+            background-color: var(--input);
+            border: 1px solid var(--border);
+        }
+
+        .participant-item:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .participant-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 0.75rem;
+            border: 2px solid var(--border);
+        }
+
+        .participant-item:hover .participant-avatar {
+            border-color: white;
+        }
+
+        .participant-info {
+            flex: 1;
+        }
+
+        .participant-name {
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .participant-role {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .participant-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* منطقة التفاعل */
+        .interaction-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 340px;
+            background-color: var(--card);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem;
+            overflow-y: auto;
+            z-index: 1500;
+            transform: translateX(-100%);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .interaction-panel.show {
+            transform: translateX(0);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+        }
+
+        .chat-message {
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 0.75rem;
+            background-color: var(--input);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .chat-message:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .message-sender {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .message-text {
+            font-size: 0.9rem;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .chat-input-field {
+            flex: 1;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1rem;
+            resize: none;
+            background-color: var(--input);
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .send-chat-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary);
+            color: white;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .send-chat-btn:hover {
+            background-color: var(--primary);
+            opacity: 0.9;
+            transform: scale(1.1);
+        }
+
+        /* إنشاء فعالية */
+        .create-event-modal .modal-content {
+            border-radius: var(--border-radius);
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .create-event-form {
+            padding: 1.25rem;
+        }
+
+        .form-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        /* الأنيميشن */
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes liveLine {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes raiseHand {
+            0% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-10px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0); }
+        }
+
+        /* تأثيرات البث المباشر */
+        .live-now {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .live-now::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+            background-size: 200% auto;
+            animation: liveLine 3s infinite linear;
+            z-index: 2;
+        }
+
+        /* مؤشرات الجودة */
+        .quality-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.75rem;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 50px;
+            color: white;
+            font-size: 0.8rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .quality-bar {
+            width: 40px;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .quality-fill {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            background-color: white;
+            border-radius: 3px;
+        }
+
+        /* حالة الاتصال */
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.75rem;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 50px;
+            color: white;
+            font-size: 0.8rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-good {
+            background-color: #4ade80;
+            box-shadow: 0 0 8px #4ade80;
+        }
+
+        .status-fair {
+            background-color: #fbbf24;
+            box-shadow: 0 0 8px #fbbf24;
+        }
+
+        .status-poor {
+            background-color: #f87171;
+            box-shadow: 0 0 8px #f87171;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* عناصر تفاعلية إضافية */
+        .emoji-reactions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .emoji-reaction {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--input);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .emoji-reaction:hover {
+            transform: scale(1.2) translateY(-5px);
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .hand-raised {
+            animation: raiseHand 0.8s ease;
+        }
+
+        /* زر تبديل الوضع المظلم */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            z-index: 100;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        /* التجاوب مع الشاشات المختلفة */
+        @media (max-width: 1400px) {
+            .events-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .control-panel, .interaction-panel {
+                width: 320px;
+            }
+            
+            .events-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1.25rem;
+                padding: 1.25rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .events-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .control-panel, .interaction-panel {
+                width: 300px;
+            }
+            
+            .media-player-container {
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+            }
+            
+            .player-footer {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .volume-control {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin-top: 0.75rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .events-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .event-card {
+                max-width: 100%;
+            }
+            
+            .media-player-container {
+                bottom: 0;
+                left: 0;
+                right: 0;
+                border-radius: 0;
+                padding: 1rem;
+            }
+            
+            .control-panel, .interaction-panel {
+                width: 85%;
+            }
+            
+            .player-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            .control-btn {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .events-filter {
+                padding: 1rem;
+                top: 53px;
+            }
+            
+            .live-events-bar {
+                padding: 0.6rem 1rem;
+            }
+            
+            .filter-options {
+                gap: 0.5rem;
+            }
+            
+            .filter-option {
+                padding: 0.5rem 0.9rem;
+                font-size: 0.85rem;
+            }
+            
+            .dark-mode-toggle {
+                bottom: 1rem;
+                left: 1rem;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .event-image {
+                height: 180px;
+            }
+            
+            .event-content {
+                padding: 1rem;
+            }
+            
+            .player-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+            
+            .player-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .control-panel, .interaction-panel {
+                width: 100%;
+                border-radius: 0;
+            }
+            
+            .create-event-modal .modal-dialog {
+                margin: 0.5rem;
+            }
+            
+            .emoji-reactions {
+                gap: 0.5rem;
+            }
+            
+            .emoji-reaction {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .event-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .participants-count {
+                align-self: flex-start;
+            }
+            
+            .live-event-pill {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .event-badge {
+                padding: 0.25rem 0.7rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* تحسينات للوضع المظلم */
+        .dark-mode .btn-close {
+            filter: invert(1);
+        }
+
+        .dark-mode .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .dark-mode .event-description {
+            opacity: 0.7;
+        }
+
+        /* تحسينات الأداء والوصول */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* تحسينات التمرير */
+        .chat-messages::-webkit-scrollbar,
+        .control-panel::-webkit-scrollbar,
+        .interaction-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb,
+        .control-panel::-webkit-scrollbar-thumb,
+        .interaction-panel::-webkit-scrollbar-thumb {
+            background-color: var(--primary);
+            border-radius: 3px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track,
+        .control-panel::-webkit-scrollbar-track,
+        .interaction-panel::-webkit-scrollbar-track {
+            background-color: var(--input);
+            border-radius: 3px;
+        }
+
+        /* تحسينات للرسومات */
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+        }
+
+        .blur-backdrop {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* تأثيرات التركيز للوصول */
+        .control-btn:focus,
+        .filter-option:focus,
+        .emoji-reaction:focus,
+        .send-chat-btn:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* تحسينات للشبكة عند عدم وجود محتوى */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text);
+            opacity: 0.7;
+        }
+
+        .empty-state i {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h4 {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .empty-state p {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid events-container">
+        <!-- شريط الفعاليات الحية -->
+        <div class="live-events-bar">
+            <div class="d-flex align-items-center">
+                <h5 class="mb-0 me-3">مباشر الآن</h5>
+                <div class="live-events-list">
+                    <div class="live-event-pill">
+                        <span>مناقشة تكنولوجيا المستقبل</span>
+                        <span class="live-indicator"></span>
+                        <span class="ms-2">(245)</span>
+                    </div>
+                    <div class="live-event-pill">
+                        <span>حوار مع المطورين</span>
+                        <span class="live-indicator"></span>
+                        <span class="ms-2">(189)</span>
+                    </div>
+                    <div class="live-event-pill">
+                        <span>جلسة أسئلة حول الذكاء الاصطناعي</span>
+                        <span class="live-indicator"></span>
+                        <span class="ms-2">(312)</span>
+                    </div>
+                    <div class="live-event-pill">
+                        <span>ندوة التعليم الرقمي</span>
+                        <span class="live-indicator"></span>
+                        <span class="ms-2">(156)</span>
+                    </div>
+                </div>
+                <button class="btn btn-outline-light btn-sm rounded-pill ms-3" data-bs-toggle="modal" data-bs-target="#createEventModal">
+                    <i class="bi bi-plus-lg me-1"></i> بدء فعالية
+                </button>
+            </div>
+        </div>
+
+        <!-- فلتر الفعاليات -->
+        <div class="events-filter blur-backdrop">
+            <div class="filter-options">
+                <div class="filter-option active">جميع الفعاليات</div>
+                <div class="filter-option">مباشر الآن</div>
+                <div class="filter-option">مجدول</div>
+                <div class="filter-option">منتهي</div>
+                <div class="filter-option">تكنولوجيا</div>
+                <div class="filter-option">ترفيه</div>
+                <div class="filter-option">رياضة</div>
+                <div class="filter-option">أخبار</div>
+                <div class="filter-option">تعليم</div>
+            </div>
+        </div>
+
+        <!-- شبكة الفعاليات -->
+        <div class="events-grid" id="eventsGrid">
+            <!-- سيتم ملء الفعاليات ديناميكيًا -->
+        </div>
+
+        <!-- مشغل الوسائط -->
+        <div class="media-player-container" id="mediaPlayer">
+            <div class="player-header">
+                <h5 class="player-title" id="playerTitle">عنوان الفعالية</h5>
+                <div class="player-controls">
+                    <div class="control-btn" id="toggleControlPanel" aria-label="فتح لوحة التحكم">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <div class="control-btn" id="toggleInteractionPanel" aria-label="فتح منطقة التفاعل">
+                        <i class="bi bi-chat"></i>
+                    </div>
+                    <div class="control-btn" id="expandPlayer" aria-label="توسيع المشغل">
+                        <i class="bi bi-fullscreen"></i>
+                    </div>
+                    <div class="control-btn" id="closePlayer" aria-label="إغلاق المشغل">
+                        <i class="bi bi-x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="player-main">
+                <div class="video-container">
+                    <div class="video-placeholder">
+                        <i class="bi bi-play-circle-fill" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="position-absolute top-0 start-0 m-2">
+                        <div class="quality-indicator">
+                            <span>جودة: عالية</span>
+                            <div class="quality-bar">
+                                <div class="quality-fill" style="width: 80%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="position-absolute top-0 end-0 m-2">
+                        <div class="connection-status">
+                            <div class="status-indicator status-good"></div>
+                            <span>اتصال ممتاز</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="emoji-reactions">
+                    <div class="emoji-reaction" aria-label="الإعجاب">👍</div>
+                    <div class="emoji-reaction" aria-label="التصفيق">👏</div>
+                    <div class="emoji-reaction" aria-label="الحب">❤️</div>
+                    <div class="emoji-reaction" aria-label="الضحك">😂</div>
+                    <div class="emoji-reaction" aria-label="الإثارة">🔥</div>
+                </div>
+            </div>
+            <div class="player-footer">
+                <div class="control-btn" aria-label="كتم الصوت">
+                    <i class="bi bi-mic-mute"></i>
+                </div>
+                <div class="control-btn" aria-label="إيقاف الكاميرا">
+                    <i class="bi bi-camera-video-off"></i>
+                </div>
+                <div class="control-btn hand-raised" id="raiseHand" aria-label="رفع اليد">
+                    <i class="bi bi-hand-index-thumb"></i>
+                </div>
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-time">01:24:36</div>
+                <div class="control-btn" aria-label="التسجيل">
+                    <i class="bi bi-record-circle"></i>
+                </div>
+                <div class="volume-control">
+                    <i class="bi bi-volume-up"></i>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- لوحة التحكم -->
+        <div class="control-panel" id="controlPanel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5>إدارة الفعالية</h5>
+                <button class="btn-close" id="closeControlPanel" aria-label="إغلاق"></button>
+            </div>
+            <div class="participant-list">
+                <h6>المشاركون (24)</h6>
+                <div class="participant-item">
+                    <img src="https://via.placeholder.com/40" class="participant-avatar" alt="صورة أحمد السعدي">
+                    <div class="participant-info">
+                        <div class="participant-name">أحمد السعدي</div>
+                        <div class="participant-role">مضيف</div>
+                    </div>
+                    <div class="participant-actions">
+                        <div class="control-btn"><i class="bi bi-mic-mute"></i></div>
+                    </div>
+                </div>
+                <div class="participant-item">
+                    <img src="https://via.placeholder.com/40" class="participant-avatar" alt="صورة سارة محمد">
+                    <div class="participant-info">
+                        <div class="participant-name">سارة محمد</div>
+                        <div class="participant-role">متحدث</div>
+                    </div>
+                    <div class="participant-actions">
+                        <div class="control-btn"><i class="bi bi-mic-mute"></i></div>
+                    </div>
+                </div>
+                <div class="participant-item">
+                    <img src="https://via.placeholder.com/40" class="participant-avatar" alt="صورة محمد علي">
+                    <div class="participant-info">
+                        <div class="participant-name">محمد علي</div>
+                        <div class="participant-role">مستمع</div>
+                    </div>
+                    <div class="participant-actions">
+                        <div class="control-btn"><i class="bi bi-person-plus"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3">
+                <h6>الإحصائيات</h6>
+                <div class="card p-3">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>المشاهدون:</span>
+                        <span>245</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>التفاعلات:</span>
+                        <span>1,234</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>مدة البث:</span>
+                        <span>01:24:36</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- منطقة التفاعل -->
+        <div class="interaction-panel" id="interactionPanel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5>المحادثة</h5>
+                <button class="btn-close" id="closeInteractionPanel" aria-label="إغلاق"></button>
+            </div>
+            <div class="chat-messages">
+                <div class="chat-message">
+                    <div class="message-sender">أحمد السعدي</div>
+                    <div class="message-text">مرحباً بالجميع، كيف حالكم اليوم؟</div>
+                </div>
+                <div class="chat-message">
+                    <div class="message-sender">سارة محمد</div>
+                    <div class="message-text">أهلاً أحمد، شكراً على استضافتي اليوم</div>
+                </div>
+                <div class="chat-message">
+                    <div class="message-sender">محمد علي</div>
+                    <div class="message-text">موضوع رائع، شكراً لكم على هذه الفعالية</div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" class="form-control chat-input-field" placeholder="اكتب رسالة...">
+                <button class="send-chat-btn" aria-label="إرسال">
+                    <i class="bi bi-send"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- زر تبديل الوضع المظلم -->
+        <button class="dark-mode-toggle" id="darkModeToggle" aria-labelتبديل الوضع المظلم>
+            <i class="bi bi-moon"></i>
+        </button>
+    </div>
+
+    <!-- modal إنشاء فعالية -->
+    <div class="modal fade" id="createEventModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content create-event-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">إنشاء فعالية جديدة</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="create-event-form">
+                        <div class="form-section">
+                            <label class="form-label">عنوان الفعالية</label>
+                            <input type="text" class="form-control" placeholder="أدخل عنواناً جذاباً للفعالية">
+                        </div>
+                        <div class="form-section">
+                            <label class="form-label">وصف الفعالية</label>
+                            <textarea class="form-control" rows="3" placeholder="صف ما ستتناوله الفعالية"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-section">
+                                    <label class="form-label">نوع الفعالية</label>
+                                    <select class="form-select">
+                                        <option>مساحة صوتية</option>
+                                        <option>بث فيديو مباشر</option>
+                                        <option>ندوة تفاعلية</option>
+                                        <option>جلسة أسئلة وأجوبة</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-section">
+                                    <label class="form-label">التصنيف</label>
+                                    <select class="form-select">
+                                        <option>تكنولوجيا</option>
+                                        <option>ترفيه</option>
+                                        <option>رياضة</option>
+                                        <option>أخبار</option>
+                                        <option>تعليم</option>
+                                        <option>أخرى</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-section">
+                                    <label class="form-label">تاريخ ووقت البدء</label>
+                                    <input type="datetime-local" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-section">
+                                    <label class="form-label">المدة المتوقعة</label>
+                                    <select class="form-select">
+                                        <option>30 دقيقة</option>
+                                        <option>1 ساعة</option>
+                                        <option>1.5 ساعة</option>
+                                        <option>2 ساعات</option>
+                                        <option>أكثر</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-section">
+                            <label class="form-label">صورة الغلاف</label>
+                            <input type="file" class="form-control" accept="image/*">
+                        </div>
+                        <div class="form-section">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="recordEvent">
+                                <label class="form-check-label" for="recordEvent">تسجيل الفعالية وتوفيرها لاحقاً</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-primary">بدء الفعالية</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // بيانات الفعاليات (محاكاة)
+        const eventsData = [
+            {
+                id: 1,
+                title: "مناقشة تكنولوجيا المستقبل والذكاء الاصطناعي",
+                description: "جلسة حوارية حول آخر التطورات في مجال الذكاء الاصطناعي وتأثيرها على مستقبل العمل",
+                image: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=80",
+                host: {
+                    name: "أحمد السعدي",
+                    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80"
+                },
+                startTime: "10:30 ص",
+                date: "اليوم",
+                participants: 245,
+                status: "live",
+                type: "مساحة صوتية",
+                category: "تكنولوجيا"
+            },
+            {
+                id: 2,
+                title: "حوار مفتوح مع مطوري التطبيقات",
+                description: "فرصة للقاء مطورين محترفين ومناقشة تحديات وعوائق تطوير التطبيقات",
+                image: "https://images.unsplash.com/photo-1581276879432-15e50529f34b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=80",
+                host: {
+                    name: "سارة محمد",
+                    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80"
+                },
+                startTime: "12:00 م",
+                date: "اليوم",
+                participants: 189,
+                status: "live",
+                type: "بث فيديو مباشر",
+                category: "تكنولوجيا"
+            },
+            {
+                id: 3,
+                title: "جلسة أسئلة وأجوبة حول تعلم Machine Learning",
+                description: "إجابات على أسئلتكم حول كيفية بدء رحلة تعلم التعلم الآلي وبناء المشاريع",
+                image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=80",
+                host: {
+                    name: "محمد علي",
+                    avatar: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80"
+                },
+                startTime: "3:00 م",
+                date: "غداً",
+                participants: 0,
+                status: "scheduled",
+                type: "ندوة تفاعلية",
+                category: "تعليم"
+            },
+            {
+                id: 4,
+                title: "تحليل مباراة الدوري الممتاز",
+                description: "مناقشة وتحليل لأبرز أحداث مباراة الأمس وتوقعات للمباريات القادمة",
+                image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=80",
+                host: {
+                    name: "خالد الرياضي",
+                    avatar: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80"
+                },
+                startTime: "8:00 م",
+                date: "الجمعة",
+                participants: 0,
+                status: "scheduled",
+                type: "بث فيديو مباشر",
+                category: "رياضة"
+            },
+            {
+                id: 5,
+                title: "نقاش حول آخر المستجدات التقنية",
+                description: "مراجعة لأهم الأخبار والتحديثات في عالم التكنولوجيا لهذا الأسبوع",
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=80",
+                host: {
+                    name: "ليلى التقنية",
+                    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80"
+                },
+                startTime: "11:00 ص",
+                date: "الخميس",
+                participants: 312,
+                status: "ended",
+                type: "مساحة صوتية",
+                category: "أخبار"
+            },
+            {
+                id: 6,
+                title: "ورشة عمل حول تصميم واجهات المستخدم",
+                description: "جلسة عملية لتعلم أساسيات تصميم واجهات المستخدم وتجربة المستخدم",
+                image: "https://images.unsplash.com/photo-1545235617-9465d2a55698?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&q=80",
+                host: {
+                    name: "نور المصممة",
+                    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80"
+                },
+                startTime: "5:00 م",
+                date: "الأحد",
+                participants: 0,
+                status: "scheduled",
+                type: "جلسة أسئلة وأجوبة",
+                category: "تعليم"
+            }
+        ];
+
+        // حالة التطبيق
+        let currentState = {
+            darkMode: localStorage.getItem('darkMode') === 'true',
+            activeEvent: null,
+            events: eventsData,
+            currentFilter: 'all'
+        };
+
+        // تهيئة التطبيق
+        function initApp() {
+            // تطبيق وضع التصميم
+            if (currentState.darkMode) {
+                document.body.classList.add('dark-mode');
+                document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-sun"></i>';
+            }
+            
+            // تحميل الفعاليات
+            renderEvents();
+            
+            // إضافة مستمعي الأحداث
+            setupEventListeners();
+        }
+
+        // عرض الفعاليات
+        function renderEvents() {
+            const eventsGrid = document.getElementById('eventsGrid');
+            eventsGrid.innerHTML = '';
+            
+            let filteredEvents = currentState.events;
+            
+            // تطبيق الفلتر
+            if (currentState.currentFilter !== 'all') {
+                if (currentState.currentFilter === 'مباشر الآن') {
+                    filteredEvents = filteredEvents.filter(event => event.status === 'live');
+                } else if (currentState.currentFilter === 'مجدول') {
+                    filteredEvents = filteredEvents.filter(event => event.status === 'scheduled');
+                } else if (currentState.currentFilter === 'منتهي') {
+                    filteredEvents = filteredEvents.filter(event => event.status === 'ended');
+                } else {
+                    filteredEvents = filteredEvents.filter(event => event.category === currentState.currentFilter);
+                }
+            }
+            
+            if (filteredEvents.length === 0) {
+                eventsGrid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="bi bi-calendar-event"></i>
+                        <h4>لا توجد فعاليات</h4>
+                        <p>لا توجد فعاليات متاحة حسب الفلتر المحدد</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEventModal">
+                            بدء فعالية جديدة
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredEvents.forEach(event => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'card event-card';
+                if (event.status === 'live') {
+                    eventCard.classList.add('live-now');
+                }
+                eventCard.dataset.id = event.id;
+                
+                let badgeClass = 'bg-secondary';
+                let badgeText = 'مجدول';
+                
+                if (event.status === 'live') {
+                    badgeClass = 'live';
+                    badgeText = 'مباشر الآن';
+                } else if (event.status === 'ended') {
+                    badgeClass = 'ended';
+                    badgeText = 'منتهي';
+                }
+                
+                eventCard.innerHTML = `
+                    <img src="${event.image}" class="event-image" alt="${event.title}">
+                    <span class="event-badge ${badgeClass}">${badgeText}</span>
+                    <div class="event-content">
+                        <h5 class="event-title">${event.title}</h5>
+                        <div class="event-host">
+                            <img src="${event.host.avatar}" class="host-avatar" alt="${event.host.name}">
+                            <span>${event.host.name}</span>
+                        </div>
+                        <p class="event-description">${event.description}</p>
+                        <div class="event-meta">
+                            <div>
+                                <span>${event.date} • ${event.startTime}</span>
+                            </div>
+                            <div class="participants-count">
+                                <i class="bi bi-people me-1"></i>
+                                <span>${event.participants}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                eventsGrid.appendChild(eventCard);
+            });
+        }
+
+        // فتح مشغل الوسائط للفعالية
+        function openMediaPlayer(eventId) {
+            const event = currentState.events.find(e => e.id === eventId);
+            if (!event) return;
+            
+            currentState.activeEvent = event;
+            
+            // تحديث عنوان المشغل
+            document.getElementById('playerTitle').textContent = event.title;
+            
+            // إظهار المشغل
+            document.getElementById('mediaPlayer').style.display = 'block';
+            
+            // إذا كانت الفعالية مباشرة، بدء محاكاة البث
+            if (event.status === 'live') {
+                simulateLiveStream();
+            }
+        }
+
+        // محاكاة البث المباشر
+        function simulateLiveStream() {
+            // محاكاة تغيير عدد المشاركين
+            setInterval(() => {
+                const participantsElement = document.querySelector('.participants-count span');
+                if (participantsElement) {
+                    const currentCount = parseInt(participantsElement.textContent);
+                    participantsElement.textContent = currentCount + Math.floor(Math.random() * 3);
+                }
+            }, 10000);
+            
+            // محاكاة تغيير جودة البث
+            setInterval(() => {
+                const qualityFill = document.querySelector('.quality-fill');
+                if (qualityFill) {
+                    const newWidth = 60 + Math.floor(Math.random() * 30);
+                    qualityFill.style.width = `${newWidth}%`;
+                }
+            }, 5000);
+        }
+
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // النقر على بطاقة فعالية
+            document.getElementById('eventsGrid').addEventListener('click', e => {
+                const eventCard = e.target.closest('.event-card');
+                if (eventCard) {
+                    const eventId = parseInt(eventCard.dataset.id);
+                    openMediaPlayer(eventId);
+                }
+            });
+            
+            // إغلاق المشغل
+            document.getElementById('closePlayer').addEventListener('click', () => {
+                document.getElementById('mediaPlayer').style.display = 'none';
+                document.getElementById('mediaPlayer').classList.remove('expanded');
+                currentState.activeEvent = null;
+            });
+            
+            // توسيع المشغل
+            document.getElementById('expandPlayer').addEventListener('click', () => {
+                document.getElementById('mediaPlayer').classList.toggle('expanded');
+            });
+            
+            // فتح/إغلاق لوحة التحكم
+            document.getElementById('toggleControlPanel').addEventListener('click', () => {
+                document.getElementById('controlPanel').classList.toggle('show');
+            });
+            
+            document.getElementById('closeControlPanel').addEventListener('click', () => {
+                document.getElementById('controlPanel').classList.remove('show');
+            });
+            
+            // فتح/إغلاق منطقة التفاعل
+            document.getElementById('toggleInteractionPanel').addEventListener('click', () => {
+                document.getElementById('interactionPanel').classList.toggle('show');
+            });
+            
+            document.getElementById('closeInteractionPanel').addEventListener('click', () => {
+                document.getElementById('interactionPanel').classList.remove('show');
+            });
+            
+            // رفع اليد
+            document.getElementById('raiseHand').addEventListener('click', function() {
+                this.classList.toggle('hand-raised');
+            });
+            
+            // إرسال رسالة في المحادثة
+            document.querySelector('.send-chat-btn').addEventListener('click', sendChatMessage);
+            document.querySelector('.chat-input-field').addEventListener('keypress', e => {
+                if (e.key === 'Enter') {
+                    sendChatMessage();
+                }
+            });
+            
+            // تطبيق الفلتر
+            document.querySelectorAll('.filter-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    currentState.currentFilter = this.textContent.trim();
+                    renderEvents();
+                });
+            });
+            
+            // تبديل الوضع المظلم/الفاتح
+            document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+        }
+
+        // إرسال رسالة في المحادثة
+        function sendChatMessage() {
+            const input = document.querySelector('.chat-input-field');
+            const text = input.value.trim();
+            
+            if (!text) return;
+            
+            const chatMessages = document.querySelector('.chat-messages');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'chat-message';
+            messageElement.innerHTML = `
+                <div class="message-sender">أنت</div>
+                <div class="message-text">${text}</div>
+            `;
+            
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            input.value = '';
+            
+            // محاكاة رد بعد فترة
+            setTimeout(() => {
+                const replies = [
+                    "شكراً على مشاركتك!",
+                    "هذه نقطة مهمة",
+                    "أتفق معك في ذلك",
+                    "هل يمكنك شرح المزيد؟",
+                    "رأي ممتاز"
+                ];
+                
+                const randomReply = replies[Math.floor(Math.random() * replies.length)];
+                const randomSender = ["أحمد السعدي", "سارة محمد", "محمد علي"][Math.floor(Math.random() * 3)];
+                
+                const replyElement = document.createElement('div');
+                replyElement.className = 'chat-message';
+                replyElement.innerHTML = `
+                    <div class="message-sender">${randomSender}</div>
+                    <div class="message-text">${randomReply}</div>
+                `;
+                
+                chatMessages.appendChild(replyElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 2000);
+        }
+
+        // تبديل الوضع المظلم/الفاتح
+        function toggleDarkMode() {
+            currentState.darkMode = !currentState.darkMode;
+            document.body.classList.toggle('dark-mode');
+            
+            const icon = document.getElementById('darkModeToggle').querySelector('i');
+            if (currentState.darkMode) {
+                icon.className = 'bi bi-sun';
+            } else {
+                icon.className = 'bi bi-moon';
+            }
+            
+            localStorage.setItem('darkMode', currentState.darkMode);
+        }
+
+        // تهيئة التطبيق عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
