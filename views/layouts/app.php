@@ -69,7 +69,30 @@
             transition: var(--transition);
             min-height: 100vh;
             line-height: 1.6;
-            padding-top: 76px;
+            padding-top: 64px;
+            margin: 0;
+        }
+        
+        .main-content {
+            margin-right: 0;
+            transition: var(--transition);
+            min-height: calc(100vh - 64px);
+            padding: 2rem 1rem;
+        }
+
+        .main-content.with-sidebar {
+            margin-right: 320px;
+        }
+
+        /* تحسين الاستجابة */
+        @media (max-width: 992px) {
+            .main-content.with-sidebar {
+                margin-right: 0;
+            }
+            
+            body {
+                padding-bottom: 60px; /* للتنقل السفلي في الموبايل */
+            }
         }
 
         .navbar {
@@ -286,141 +309,27 @@
     <?php endif; ?>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">
-                <i class="bi bi-twitter"></i>
-                Tewiiq
-            </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">
-                            <i class="bi bi-house-door"></i>
-                            الرئيسية
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/search">
-                            <i class="bi bi-search"></i>
-                            البحث
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/reels">
-                            <i class="bi bi-camera-reels"></i>
-                            الريلز
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link position-relative" href="/messages">
-                            <i class="bi bi-envelope"></i>
-                            الرسائل
-                            <?php if (isset($_SESSION['user_id'])): ?>
-                                <?php
-                                require_once __DIR__ . '/../../models/Message.php';
-                                $unreadCount = Message::getUnreadCount($_SESSION['user_id']);
-                                if ($unreadCount > 0):
-                                ?>
-                                    <span class="message-badge"><?= $unreadCount > 9 ? '9+' : $unreadCount ?></span>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/events">
-                            <i class="bi bi-calendar-event"></i>
-                            الفعاليات
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/lists">
-                            <i class="bi bi-list-ul"></i>
-                            القوائم
-                        </a>
-                    </li>
-                </ul>
-                
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <div class="dropdown user-dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
-                            <?php
-                            require_once __DIR__ . '/../../models/User.php';
-                            $currentUser = User::findById($_SESSION['user_id']);
-                            ?>
-                            <img src="<?= $currentUser->avatar ?? '/images/default-avatar.png' ?>" 
-                                 alt="<?= $currentUser->fullname ?>" 
-                                 class="user-avatar me-2">
-                            <span class="d-none d-lg-inline"><?= $currentUser->fullname ?></span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="/profile/<?= $currentUser->username ?>">
-                                <i class="bi bi-person"></i>
-                                الملف الشخصي
-                            </a></li>
-                            <li><a class="dropdown-item" href="/<?= $currentUser->username ?>/followers">
-                                <i class="bi bi-people"></i>
-                                المتابعون
-                            </a></li>
-                            <li><a class="dropdown-item" href="/suggestions">
-                                <i class="bi bi-person-plus"></i>
-                                اقتراحات المتابعة
-                            </a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/settings">
-                                <i class="bi bi-gear"></i>
-                                الإعدادات
-                            </a></li>
-                            <li><a class="dropdown-item" href="/logout">
-                                <i class="bi bi-box-arrow-right"></i>
-                                تسجيل الخروج
-                            </a></li>
-                        </ul>
-                    </div>
-                <?php else: ?>
-                    <div class="d-flex">
-                        <a href="/login" class="btn btn-outline-primary me-2">تسجيل الدخول</a>
-                        <a href="/register" class="btn btn-primary">إنشاء حساب</a>
-                    </div>
-                <?php endif; ?>
+    <!-- استخدام المكونات الجديدة -->
+    <?php include __DIR__ . '/../components/navbar.php'; ?>
+    <?php include __DIR__ . '/../components/sidebar.php'; ?>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content with-sidebar" id="main-content">
+        <?php if (isset($_SESSION['flash_message'])): ?>
+            <div class="alert alert-<?= $_SESSION['flash_type'] ?? 'info' ?> alert-dismissible fade show" role="alert">
+                <?= htmlspecialchars($_SESSION['flash_message']) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        </div>
-    </nav>
-
-    <!-- Mobile Bottom Navigation -->
-    <div class="mobile-bottom-nav d-lg-none">
-        <a href="/" class="nav-link text-center">
-            <i class="bi bi-house-door d-block"></i>
-            <small>الرئيسية</small>
-        </a>
-        <a href="/search" class="nav-link text-center">
-            <i class="bi bi-search d-block"></i>
-            <small>البحث</small>
-        </a>
-        <a href="/reels" class="nav-link text-center">
-            <i class="bi bi-camera-reels d-block"></i>
-            <small>الريلز</small>
-        </a>
-        <a href="/messages" class="nav-link text-center position-relative">
-            <i class="bi bi-envelope d-block"></i>
-            <small>الرسائل</small>
-            <?php if (isset($_SESSION['user_id']) && $unreadCount > 0): ?>
-                <span class="message-badge"><?= $unreadCount > 9 ? '9+' : $unreadCount ?></span>
-            <?php endif; ?>
-        </a>
-        <a href="/events" class="nav-link text-center">
-            <i class="bi bi-calendar-event d-block"></i>
-            <small>الفعاليات</small>
-        </a>
-    </div>
-
-    <?=$this->section('content')?>
+            <?php 
+            unset($_SESSION['flash_message'], $_SESSION['flash_type']); 
+            ?>
+        <?php endif; ?>
+        
+        <?=$this->section('content')?>
+    </main>
+    
+    <!-- استخدام الفوتر الجديد -->
+    <?php include __DIR__ . '/../components/footer.php'; ?>
     
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

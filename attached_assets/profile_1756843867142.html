@@ -1,279 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="صفحة الملف الشخصي - تطبيق تويتر العربي">
-    <meta name="keywords" content="تويتر, ملف شخصي, تغريدات, متابعة">
-    <meta name="author" content="تطبيق تويتر العربي">
-    <title>أحمد محمد (@ahmed_mohamed) | تطبيق تويتر العربي</title>
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" as="style">
-    
-    <!-- External stylesheets -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap">
-    <link rel="stylesheet" href="static/css/profile-style.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>">
-</head>
-<body>
-    <!-- Loading overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner">
-            <div class="spinner"></div>
-            <p>جاري التحميل...</p>
-        </div>
-    </div>
-
-    <!-- Main container -->
-    <div class="main-container">
-        <!-- Header Navigation -->
-        <header class="sticky-header" id="stickyHeader">
-            <div class="container-fluid">
-                <div class="row align-items-center">
-                    <div class="col-auto">
-                        <button class="btn-back" id="backBtn" aria-label="العودة للخلف">
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                    <div class="col">
-                        <div class="header-info">
-                            <h1 class="header-name">أحمد محمد</h1>
-                            <p class="header-tweets-count">1,234 تغريدة</p>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="header-actions">
-                            <button class="btn-action" id="themeToggle" aria-label="تبديل الوضع الداكن/الفاتح" title="تبديل الوضع">
-                                <i class="fas fa-moon" id="themeIcon"></i>
-                            </button>
-                            <button class="btn-action" id="shareBtn" aria-label="مشاركة الملف الشخصي" title="مشاركة">
-                                <i class="fas fa-share"></i>
-                            </button>
-                            <button class="btn-action" id="moreBtn" aria-label="المزيد من الخيارات" title="المزيد">
-                                <i class="fas fa-ellipsis-h"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Profile Content -->
-        <main class="profile-content">
-            <!-- Cover Photo Section -->
-            <section class="cover-section" id="coverSection">
-                <div class="cover-photo" id="coverPhoto">
-                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=400&q=80" 
-                         alt="صورة الغلاف" class="cover-image" id="coverImage">
-                    <div class="cover-overlay">
-                        <button class="btn-edit-cover" id="editCoverBtn" aria-label="تغيير صورة الغلاف">
-                            <i class="fas fa-camera"></i>
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Profile Info Section -->
-            <section class="profile-info-section">
-                <div class="container">
-                    <div class="profile-header">
-                        <div class="profile-avatar-container">
-                            <div class="profile-avatar" id="profileAvatar">
-                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" 
-                                     alt="صورة الملف الشخصي" class="avatar-image" id="avatarImage">
-                                <div class="avatar-overlay">
-                                    <button class="btn-edit-avatar" id="editAvatarBtn" aria-label="تغيير صورة الملف الشخصي">
-                                        <i class="fas fa-camera"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="profile-actions">
-                            <button class="btn-follow" id="followBtn">
-                                <span class="follow-text">متابعة</span>
-                                <span class="following-text" style="display: none;">متابَع</span>
-                            </button>
-                            <button class="btn-message" id="messageBtn" aria-label="إرسال رسالة">
-                                <i class="fas fa-envelope"></i>
-                            </button>
-                            <button class="btn-more-profile" id="moreProfileBtn" aria-label="المزيد من الخيارات">
-                                <i class="fas fa-ellipsis-h"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="profile-details">
-                        <div class="profile-name-section">
-                            <h2 class="profile-name">
-                                أحمد محمد
-                                <i class="fas fa-check-circle verified-badge" title="حساب موثق"></i>
-                            </h2>
-                            <p class="profile-username">@ahmed_mohamed</p>
-                        </div>
-
-                        <div class="profile-bio">
-                            <p>مطور تطبيقات ويب ومحب للتكنولوجيا 💻 | أشارك أفكاري حول البرمجة والتطوير | مؤسس شركة تقنية ناشئة 🚀</p>
-                        </div>
-
-                        <div class="profile-meta">
-                            <div class="meta-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>الرياض، المملكة العربية السعودية</span>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-link"></i>
-                                <a href="https://ahmed-mohamed.dev" target="_blank" rel="noopener noreferrer">ahmed-mohamed.dev</a>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-calendar-alt"></i>
-                                <span>انضم في مارس 2020</span>
-                            </div>
-                        </div>
-
-                        <div class="profile-stats">
-                            <button class="stat-item" id="followingBtn">
-                                <span class="stat-number">892</span>
-                                <span class="stat-label">متابَع</span>
-                            </button>
-                            <button class="stat-item" id="followersBtn">
-                                <span class="stat-number">15.2K</span>
-                                <span class="stat-label">متابع</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Tabs Navigation -->
-            <section class="tabs-section" id="tabsSection">
-                <div class="container">
-                    <nav class="profile-tabs">
-                        <button class="tab-item active" data-tab="tweets" id="tweetsTab">
-                            <span>التغريدات</span>
-                        </button>
-                        <button class="tab-item" data-tab="replies" id="repliesTab">
-                            <span>الردود</span>
-                        </button>
-                        <button class="tab-item" data-tab="media" id="mediaTab">
-                            <span>الوسائط</span>
-                        </button>
-                        <button class="tab-item" data-tab="likes" id="likesTab">
-                            <span>الإعجابات</span>
-                        </button>
-                        <div class="tab-indicator" id="tabIndicator"></div>
-                    </nav>
-                </div>
-            </section>
-
-            <!-- Content Area -->
-            <section class="content-area">
-                <div class="container">
-                    <div class="row">
-                        <!-- Main Content -->
-                        <div class="col-lg-8">
-                            <div class="tweets-container" id="tweetsContainer">
-                                <!-- Tweets will be loaded here -->
-                            </div>
-                            
-                            <!-- Load More Button -->
-                            <div class="load-more-container" id="loadMoreContainer">
-                                <button class="btn-load-more" id="loadMoreBtn">
-                                    <span class="load-text">تحميل المزيد</span>
-                                    <span class="loading-text" style="display: none;">
-                                        <i class="fas fa-spinner fa-spin"></i>
-                                        جاري التحميل...
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Sidebar -->
-                        <div class="col-lg-4">
-                            <aside class="sidebar">
-                                <!-- Who to Follow -->
-                                <div class="sidebar-widget">
-                                    <h3 class="widget-title">من تتابع</h3>
-                                    <div class="suggestions-list" id="suggestionsList">
-                                        <!-- Suggestions will be loaded here -->
-                                    </div>
-                                    <button class="btn-show-more">عرض المزيد</button>
-                                </div>
-
-                                <!-- Trending Topics -->
-                                <div class="sidebar-widget">
-                                    <h3 class="widget-title">المواضيع الشائعة</h3>
-                                    <div class="trending-list" id="trendingList">
-                                        <!-- Trending topics will be loaded here -->
-                                    </div>
-                                    <button class="btn-show-more">عرض المزيد</button>
-                                </div>
-
-                                <!-- Footer Links -->
-                                <div class="sidebar-footer">
-                                    <div class="footer-links">
-                                        <a href="#" class="footer-link">شروط الخدمة</a>
-                                        <a href="#" class="footer-link">سياسة الخصوصية</a>
-                                        <a href="#" class="footer-link">سياسة ملفات تعريف الارتباط</a>
-                                        <a href="#" class="footer-link">معلومات الإعلانات</a>
-                                        <a href="#" class="footer-link">المزيد</a>
-                                    </div>
-                                    <p class="footer-copyright">© 2024 تطبيق تويتر العربي</p>
-                                </div>
-                            </aside>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- Image Modal -->
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
-                </div>
-                <div class="modal-body">
-                    <img src="" alt="صورة مكبرة" class="modal-image" id="modalImage">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Follow Modal -->
-    <div class="modal fade" id="followModal" tabindex="-1" aria-labelledby="followModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="followModalLabel">المتابعون</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="follow-list" id="followList">
-                        <!-- Follow list will be loaded here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Floating Action Button -->
-    <button class="fab-tweet" id="fabTweet" aria-label="تغريدة جديدة">
-        <i class="fas fa-feather-alt"></i>
-    </button>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="static/js/profile-script.js"></script>
-</body>
-</html>
-

@@ -14,9 +14,12 @@ require_once __DIR__ . '/../controllers/EventController.php';
 require_once __DIR__ . '/../controllers/ChatController.php';
 require_once __DIR__ . '/../controllers/FollowingController.php';
 require_once __DIR__ . '/../controllers/ReelController.php';
+require_once __DIR__ . '/../controllers/AboutController.php';
+require_once __DIR__ . '/../controllers/HelpController.php';
 require_once __DIR__ . '/../database/Database.php';
 
 use RedBeanPHP\R;
+use League\Plates\Engine;
 
 // Set cache control headers
 header('Cache-Control: no-cache, no-store, must-revalidate');
@@ -322,6 +325,25 @@ try {
         case $path === '/reels/comments' && $requestMethod === 'GET':
             $controller = new ReelController();
             $controller->getComments();
+            break;
+            
+        // About and Help routes
+        case $path === '/about':
+            $templates = new Engine(__DIR__ . '/../views');
+            $controller = new AboutController($templates);
+            $controller->index();
+            break;
+            
+        case $path === '/help':
+            $templates = new Engine(__DIR__ . '/../views');
+            $controller = new HelpController($templates);
+            $controller->index();
+            break;
+            
+        case preg_match('/^\/help\/article\/([a-zA-Z0-9_-]+)$/', $path, $matches):
+            $templates = new Engine(__DIR__ . '/../views');
+            $controller = new HelpController($templates);
+            $controller->article($matches[1]);
             break;
             
         // API routes for user search
