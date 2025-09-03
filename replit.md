@@ -8,11 +8,16 @@ Tewiiq is a fully functional Arabic social media application built with PHP that
 - ✅ Tweet posting and viewing functionality
 - ✅ User profiles with follow/unfollow system
 - ✅ Like/unlike tweets functionality
-- ✅ **NEW**: Tweet detail pages with replies and threading
-- ✅ **NEW**: Advanced search functionality with filtering
-- ✅ **NEW**: User settings and preferences management
-- ✅ **NEW**: Lists and groups functionality
-- ✅ **NEW**: Events and live broadcasting features
+- ✅ Tweet detail pages with replies and threading
+- ✅ Advanced search functionality with filtering
+- ✅ User settings and preferences management
+- ✅ Lists and groups functionality
+- ✅ Events and live broadcasting features
+- ✅ **NEW**: Direct messaging system with real-time chat
+- ✅ **NEW**: Comprehensive followers/following management
+- ✅ **NEW**: Reels/short videos system with interactions
+- ✅ **NEW**: Enhanced navigation with mobile support
+- ✅ **NEW**: User search and suggestions system
 - ✅ SQLite database with comprehensive schema
 - ✅ Responsive Arabic RTL interface
 - ✅ Server running on port 5000
@@ -51,11 +56,14 @@ Preferred communication style: Simple, everyday language.
   - `SettingsController`: User preferences and account management
   - `ListController`: User-created lists and groups
   - `EventController`: Live events and broadcasting features
+  - `ChatController`: Direct messaging and conversation management
+  - `FollowingController`: Followers/following pages and user suggestions
+  - `ReelController`: Short video content creation and interaction
 
 ## Data Storage
 - **ORM**: RedBean PHP v5.7.5 providing automatic table creation and relationship mapping
 - **Database**: SQLite database (tewiiq.db) for simplicity and portability
-- **Schema**: Comprehensive database schema with 10+ tables including:
+- **Schema**: Comprehensive database schema with 15+ tables including:
   - `users`: User accounts and profiles
   - `tweets`: Main tweet content
   - `replies`: Tweet replies with threading support
@@ -67,6 +75,12 @@ Preferred communication style: Simple, everyday language.
   - `events`: Live events and broadcasting
   - `eventparticipants`: Event participation tracking
   - `usersettings`: User preferences and configurations
+  - `conversations`: Direct message conversations
+  - `messages`: Individual chat messages
+  - `reels`: Short video content
+  - `reel_likes`: Reel interaction likes
+  - `reel_comments`: Comments on reels
+  - `reel_views`: View tracking for reels
 - **Data Access**: Active Record pattern through RedBean's bean objects
 - **Sample Data**: Includes pre-populated users, tweets, and follow relationships
 

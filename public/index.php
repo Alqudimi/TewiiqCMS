@@ -11,6 +11,12 @@ require_once __DIR__ . '/../controllers/SearchController.php';
 require_once __DIR__ . '/../controllers/SettingsController.php';
 require_once __DIR__ . '/../controllers/ListController.php';
 require_once __DIR__ . '/../controllers/EventController.php';
+require_once __DIR__ . '/../controllers/ChatController.php';
+require_once __DIR__ . '/../controllers/FollowingController.php';
+require_once __DIR__ . '/../controllers/ReelController.php';
+require_once __DIR__ . '/../database/Database.php';
+
+use RedBeanPHP\R;
 
 // Set cache control headers
 header('Cache-Control: no-cache, no-store, must-revalidate');
@@ -238,6 +244,106 @@ try {
         case $path === '/events/search':
             $controller = new EventController();
             $controller->search();
+            break;
+            
+        // Messages routes
+        case $path === '/messages':
+            $controller = new ChatController();
+            $controller->index();
+            break;
+            
+        case preg_match('/^\/messages\/(\d+)$/', $path, $matches):
+            $controller = new ChatController();
+            $controller->show($matches[1]);
+            break;
+            
+        case $path === '/messages/send' && $requestMethod === 'POST':
+            $controller = new ChatController();
+            $controller->sendMessage();
+            break;
+            
+        case $path === '/messages/start' && $requestMethod === 'POST':
+            $controller = new ChatController();
+            $controller->startConversation();
+            break;
+            
+        case $path === '/messages/api' && $requestMethod === 'GET':
+            $controller = new ChatController();
+            $controller->getMessages();
+            break;
+            
+        // Following routes
+        case preg_match('/^\/([a-zA-Z0-9_]+)\/followers$/', $path, $matches):
+            $controller = new FollowingController();
+            $controller->followers($matches[1]);
+            break;
+            
+        case preg_match('/^\/([a-zA-Z0-9_]+)\/following$/', $path, $matches):
+            $controller = new FollowingController();
+            $controller->following($matches[1]);
+            break;
+            
+        case $path === '/suggestions':
+            $controller = new FollowingController();
+            $controller->suggestions();
+            break;
+            
+        case $path === '/users/search':
+            $controller = new FollowingController();
+            $controller->search();
+            break;
+            
+        // Reels routes
+        case $path === '/reels':
+            $controller = new ReelController();
+            $controller->index();
+            break;
+            
+        case preg_match('/^\/reels\/(\d+)$/', $path, $matches):
+            $controller = new ReelController();
+            $controller->show($matches[1]);
+            break;
+            
+        case $path === '/reels/create':
+            $controller = new ReelController();
+            $controller->create();
+            break;
+            
+        case $path === '/reels/like' && $requestMethod === 'POST':
+            $controller = new ReelController();
+            $controller->like();
+            break;
+            
+        case $path === '/reels/comment' && $requestMethod === 'POST':
+            $controller = new ReelController();
+            $controller->comment();
+            break;
+            
+        case $path === '/reels/comments' && $requestMethod === 'GET':
+            $controller = new ReelController();
+            $controller->getComments();
+            break;
+            
+        // API routes for user search
+        case $path === '/api/users/search' && $requestMethod === 'GET':
+            header('Content-Type: application/json');
+            $query = $_GET['q'] ?? '';
+            if (strlen($query) >= 2) {
+                Database::init();
+                $users = R::find('users', 'fullname LIKE ? OR username LIKE ? LIMIT 10', ["%$query%", "%$query%"]);
+                $result = [];
+                foreach ($users as $user) {
+                    $result[] = [
+                        'id' => $user->id,
+                        'fullname' => $user->fullname,
+                        'username' => $user->username,
+                        'avatar' => $user->avatar
+                    ];
+                }
+                echo json_encode(['users' => $result]);
+            } else {
+                echo json_encode(['users' => []]);
+            }
             break;
             
         // Static files (uploads)

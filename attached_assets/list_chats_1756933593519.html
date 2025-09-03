@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحادثات | تويت</title>
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts - Arabic Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Light Mode Variables */
+            --chat-primary-light: #7c4dff;
+            --chat-secondary-light: #ff6e6c;
+            --chat-accent-light: #2ce0c8;
+            --chat-background-light: #f8f9fa;
+            --chat-card-light: #ffffff;
+            --chat-text-light: #2d3748;
+            --chat-unread-light: #ebf8ff;
+            --chat-border-light: #e2e8f0;
+            --chat-hover-light: #edf2f7;
+
+            /* Dark Mode Variables */
+            --chat-primary-dark: #9370ff;
+            --chat-secondary-dark: #ff8c8a;
+            --chat-accent-dark: #3af0da;
+            --chat-background-dark: #1a202c;
+            --chat-card-dark: #2d3748;
+            --chat-text-dark: #e2e8f0;
+            --chat-unread-dark: #2a4365;
+            --chat-border-dark: #4a5568;
+            --chat-hover-dark: #2d3748;
+
+            /* General Variables */
+            --border-radius-sm: 8px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+            --border-radius-xl: 32px;
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-medium: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --transition-slower: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.14);
+            --shadow-xl: 0 12px 36px rgba(0, 0, 0, 0.15);
+            --shadow-2xl: 0 24px 48px rgba(0, 0, 0, 0.18);
+            
+            /* Initial values - light mode by default */
+            --chat-primary: var(--chat-primary-light);
+            --chat-secondary: var(--chat-secondary-light);
+            --chat-accent: var(--chat-accent-light);
+            --chat-background: var(--chat-background-light);
+            --chat-card: var(--chat-card-light);
+            --chat-text: var(--chat-text-light);
+            --chat-unread: var(--chat-unread-light);
+            --chat-border: var(--chat-border-light);
+            --chat-hover: var(--chat-hover-light);
+        }
+
+        .dark-mode {
+            --chat-primary: var(--chat-primary-dark);
+            --chat-secondary: var(--chat-secondary-dark);
+            --chat-accent: var(--chat-accent-dark);
+            --chat-background: var(--chat-background-dark);
+            --chat-card: var(--chat-card-dark);
+            --chat-text: var(--chat-text-dark);
+            --chat-unread: var(--chat-unread-dark);
+            --chat-border: var(--chat-border-dark);
+            --chat-hover: var(--chat-hover-dark);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--chat-background);
+            color: var(--chat-text);
+            transition: var(--transition-slow);
+            min-height: 100vh;
+            line-height: 1.6;
+            padding-top: 76px;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: var(--chat-card);
+            box-shadow: var(--shadow-md);
+            padding: 0.5rem 1rem;
+            transition: var(--transition-slow);
+            border-bottom: 1px solid var(--chat-border);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            color: var(--chat-primary);
+            font-size: 1.75rem;
+            display: flex;
+            align-items: center;
+            transition: var(--transition-medium);
+        }
+
+        .navbar-brand:hover {
+            color: var(--chat-primary);
+            transform: scale(1.05);
+        }
+
+        .navbar-brand i {
+            margin-left: 0.5rem;
+            transition: var(--transition-medium);
+        }
+
+        .nav-link {
+            color: var(--chat-text);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-md);
+            transition: var(--transition-medium);
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .nav-link i {
+            margin-left: 0.5rem;
+            font-size: 1.2rem;
+            transition: var(--transition-medium);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--chat-hover);
+            color: var(--chat-primary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--chat-primary);
+            border-radius: 50%;
+        }
+
+        .nav-badge {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            background-color: var(--chat-secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            transition: var(--transition-medium);
+        }
+
+        .btn-new-chat {
+            background: linear-gradient(135deg, var(--chat-primary), var(--chat-secondary));
+            color: white;
+            border-radius: 50px;
+            padding: 0.6rem 1.5rem;
+            font-weight: 700;
+            transition: var(--transition-medium);
+            border: none;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-new-chat:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-new-chat:active {
+            transform: translateY(0);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-new-chat i {
+            margin-left: 0.5rem;
+        }
+
+        .theme-toggle {
+            background: var(--chat-hover);
+            border: none;
+            color: var(--chat-text);
+            font-size: 1.25rem;
+            transition: var(--transition-medium);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--chat-primary);
+            color: white;
+            transform: rotate(30deg);
+        }
+
+        .user-dropdown .dropdown-toggle::after {
+            display: none;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--chat-primary);
+            padding: 2px;
+            transition: var(--transition-medium);
+        }
+
+        .user-dropdown:hover .user-avatar {
+            border-color: var(--chat-primary);
+            transform: scale(1.05);
+        }
+
+        .dropdown-menu {
+            background-color: var(--chat-card);
+            border: 1px solid var(--chat-border);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-xl);
+            padding: 0.5rem;
+            transition: var(--transition-medium);
+        }
+
+        .dropdown-item {
+            color: var(--chat-text);
+            border-radius: var(--border-radius-sm);
+            padding: 0.75rem 1rem;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--chat-hover);
+            color: var(--chat-primary);
+        }
+
+        .dropdown-item i {
+            margin-left: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .dropdown-divider {
+            border-color: var(--chat-border);
+            margin: 0.5rem 0;
+        }
+
+        /* Main Container */
+        .conversations-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 1.5rem;
+            transition: var(--transition-medium);
+        }
+
+        @media (max-width: 992px) {
+            .conversations-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .conversation-detail {
+                display: none;
+            }
+            
+            .mobile-bottom-nav {
+                display: flex;
+            }
+            
+            .conversation-list {
+                border-radius: var(--border-radius-lg);
+            }
+        }
+
+        /* Conversation List */
+        .conversation-list {
+            background-color: var(--chat-card);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--chat-border);
+            height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-slow);
+        }
+
+        .conversation-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--chat-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .conversation-title {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--chat-text);
+            margin: 0;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .header-btn {
+            background: transparent;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--chat-text);
+            transition: var(--transition-fast);
+        }
+
+        .header-btn:hover {
+            background-color: var(--chat-hover);
+            color: var(--chat-primary);
+        }
+
+        .search-container {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--chat-border);
+        }
+
+        .search-input {
+            background-color: var(--chat-hover);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            width: 100%;
+            transition: var(--transition-medium);
+            color: var(--chat-text);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.2);
+            border-color: var(--chat-primary);
+            outline: none;
+            background-color: var(--chat-card);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--chat-text);
+            opacity: 0.7;
+            transition: var(--transition-medium);
+        }
+
+        .search-input:focus + .search-icon {
+            color: var(--chat-primary);
+            opacity: 1;
+        }
+
+        .filter-tabs {
+            display: flex;
+            padding: 0.5rem 1.5rem;
+            border-bottom: 1px solid var(--chat-border);
+            gap: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .filter-tab {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--chat-text);
+            opacity: 0.7;
+            transition: var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .filter-tab.active {
+            background-color: var(--chat-primary);
+            color: white;
+            opacity: 1;
+        }
+
+        .filter-tab:hover {
+            opacity: 1;
+            background-color: var(--chat-hover);
+        }
+
+        .conversations-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        .conversation-section {
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-weight: 700;
+            color: var(--chat-text);
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .conversation-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: var(--border-radius-md);
+            margin-bottom: 0.5rem;
+            transition: var(--transition-medium);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .conversation-item.unread {
+            background-color: var(--chat-unread);
+        }
+
+        .conversation-item:hover {
+            background-color: var(--chat-hover);
+            transform: translateX(-5px);
+        }
+
+        .conversation-item.active {
+            background-color: var(--chat-primary);
+            color: white;
+        }
+
+        .conversation-item.active .conversation-name,
+        .conversation-item.active .conversation-preview,
+        .conversation-item.active .conversation-time {
+            color: white;
+        }
+
+        .conversation-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 1rem;
+            border: 2px solid var(--chat-primary);
+            padding: 2px;
+            flex-shrink: 0;
+        }
+
+        .group-avatar {
+            position: relative;
+            width: 56px;
+            height: 56px;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+
+        .group-avatar .avatar-sm {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--chat-card);
+            position: absolute;
+        }
+
+        .group-avatar .avatar-1 {
+            top: 0;
+            left: 0;
+            z-index: 3;
+        }
+
+        .group-avatar .avatar-2 {
+            bottom: 0;
+            right: 0;
+            z-index: 2;
+        }
+
+        .group-avatar .avatar-more {
+            bottom: 0;
+            left: 0;
+            background-color: var(--chat-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            z-index: 1;
+        }
+
+        .conversation-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .conversation-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+        }
+
+        .conversation-name {
+            font-weight: 700;
+            color: var(--chat-text);
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .conversation-time {
+            font-size: 0.8rem;
+            color: var(--chat-text);
+            opacity: 0.7;
+            white-space: nowrap;
+        }
+
+        .conversation-preview {
+            font-size: 0.9rem;
+            color: var(--chat-text);
+            opacity: 0.8;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .conversation-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .conversation-badge {
+            background-color: var(--chat-primary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .conversation-indicators {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .conversation-indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+        }
+
+        .indicator-online {
+            background-color: #48bb78;
+            color: white;
+        }
+
+        .indicator-typing {
+            background-color: var(--chat-accent);
+            color: white;
+        }
+
+        .indicator-media {
+            color: var(--chat-primary);
+        }
+
+        .indicator-link {
+            color: var(--chat-secondary);
+        }
+
+        /* Conversation Detail */
+        .conversation-detail {
+            background-color: var(--chat-card);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--chat-border);
+            height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-slow);
+        }
+
+        .detail-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--chat-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .detail-user {
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 1rem;
+            border: 2px solid var(--chat-primary);
+            padding: 2px;
+        }
+
+        .detail-info h5 {
+            margin: 0;
+            font-weight: 700;
+            color: var(--chat-text);
+        }
+
+        .detail-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--chat-text);
+            opacity: 0.7;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .messages-container {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message-date {
+            text-align: center;
+            margin: 1rem 0;
+            font-size: 0.8rem;
+            color: var(--chat-text);
+            opacity: 0.7;
+        }
+
+        .message-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .message-row.own {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            max-width: 70%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .message-bubble {
+            background-color: var(--chat-hover);
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius-lg);
+            position: relative;
+            transition: var(--transition-medium);
+        }
+
+        .message-row.own .message-bubble {
+            background-color: var(--chat-primary);
+            color: white;
+        }
+
+        .message-text {
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            text-align: left;
+        }
+
+        .message-row.own .message-time {
+            text-align: right;
+        }
+
+        .message-status {
+            display: flex;
+            gap: 0.25rem;
+            justify-content: flex-end;
+            margin-top: 0.25rem;
+        }
+
+        .status-icon {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        .status-seen {
+            color: var(--chat-primary);
+        }
+
+        .message-input {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--chat-border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .input-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .input-btn {
+            background: transparent;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--chat-text);
+            transition: var(--transition-fast);
+        }
+
+        .input-btn:hover {
+            background-color: var(--chat-hover);
+            color: var(--chat-primary);
+        }
+
+        .message-field {
+            flex: 1;
+            background-color: var(--chat-hover);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            transition: var(--transition-medium);
+            color: var(--chat-text);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .message-field:focus {
+            box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.2);
+            border-color: var(--chat-primary);
+            outline: none;
+            background-color: var(--chat-card);
+        }
+
+        .send-btn {
+            background: var(--chat-primary);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition-medium);
+        }
+
+        .send-btn:hover {
+            background: var(--chat-secondary);
+            transform: scale(1.1);
+        }
+
+        /* Mobile Bottom Navigation */
+        .mobile-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--chat-card);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem;
+            z-index: 1020;
+            display: none;
+            justify-content: space-around;
+            border-top: 1px solid var(--chat-border);
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: var(--border-radius-md);
+            transition: var(--transition-fast);
+            color: var(--chat-text);
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+
+        .mobile-nav-item.active {
+            color: var(--chat-primary);
+        }
+
+        .mobile-nav-item i {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .mobile-nav-item:hover {
+            background-color: var(--chat-hover);
+        }
+
+        /* Empty State */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            text-align: center;
+            color: var(--chat-text);
+            opacity: 0.7;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--chat-primary);
+        }
+
+        .empty-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-text {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        @keyframes typing {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        .typing-animation {
+            animation: typing 1.5s infinite;
+        }
+
+        /* Scrollbar Styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--chat-hover);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--chat-primary);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--chat-secondary);
+        }
+
+        /* Accessibility Improvements */
+        .btn:focus, .form-control:focus, .header-btn:focus, .input-btn:focus {
+            outline: 2px solid var(--chat-accent);
+            outline-offset: 2px;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: var(--chat-primary);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* High contrast support */
+        @media (prefers-contrast: high) {
+            .conversation-list, .conversation-detail {
+                border: 2px solid var(--chat-text);
+            }
+            
+            .conversation-item.active {
+                outline: 2px solid var(--chat-primary);
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: translateX(-100%);
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0,
+                rgba(255, 255, 255, 0.2) 20%,
+                rgba(255, 255, 255, 0.5) 60%,
+                rgba(255, 255, 255, 0)
+            );
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">تخطي إلى المحتوى الرئيسي</a>
+    
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-chat-left-text"></i>
+                <span>المحادثات</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="تبديل التنقل">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <!-- Navigation Links -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-house-fill"></i>
+                            <span>الرئيسية</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-hash"></i>
+                            <span>الاستكشاف</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-bell"></i>
+                            <span>الإشعارات</span>
+                            <span class="nav-badge">12</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" aria-current="page">
+                            <i class="bi bi-envelope"></i>
+                            <span>الرسائل</span>
+                            <span class="nav-badge">5</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Theme Toggle and New Chat Button -->
+                <div class="d-flex align-items-center">
+                    <button class="btn-new-chat ms-2 d-none d-md-block">
+                        <i class="bi bi-plus-lg"></i> محادثة جديدة
+                    </button>
+                    
+                    <button class="theme-toggle btn ms-2" id="themeToggle" aria-label="تبديل الوضع المظلم">
+                        <i class="bi bi-moon"></i>
+                    </button>
+                    
+                    <!-- User Profile Dropdown -->
+                    <div class="dropdown ms-2 user-dropdown">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://via.placeholder.com/40" alt="صورة المستخدم" class="user-avatar">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
+                            <li>
+                                <div class="dropdown-item-text">
+                                    <div class="fw-bold">أحمد محمد</div>
+                                    <div class="small text-muted">@ahmedmohamed</div>
+                                </div>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> الملف الشخصي</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-chat-left-text"></i> المحادثات</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> الإعدادات</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right"></i> تسجيل الخروج</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="conversations-container" id="main-content">
+        <!-- Conversation List -->
+        <div class="conversation-list fade-in">
+            <div class="conversation-header">
+                <h2 class="conversation-title">المحادثات</h2>
+                <div class="header-actions">
+                    <button class="header-btn" aria-label="بحث">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    <button class="header-btn" aria-label="فرز">
+                        <i class="bi bi-filter"></i>
+                    </button>
+                    <button class="header-btn" aria-label="إعدادات">
+                        <i class="bi bi-three-dots"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="search-container">
+                <div class="position-relative">
+                    <input type="text" class="search-input" placeholder="ابحث في المحادثات" aria-label="ابحث في المحادثات">
+                    <i class="bi bi-search search-icon"></i>
+                </div>
+            </div>
+            
+            <div class="filter-tabs">
+                <button class="filter-tab active">الكل</button>
+                <button class="filter-tab">غير المقروء</button>
+                <button class="filter-tab">المجموعات</button>
+                <button class="filter-tab">المهمة</button>
+                <button class="filter-tab">المؤرشفة</button>
+            </div>
+            
+            <div class="conversations-scroll">
+                <!-- Pinned Conversations -->
+                <div class="conversation-section">
+                    <h4 class="section-title">مثبت</h4>
+                    
+                    <div class="conversation-item unread active">
+                        <img src="https://via.placeholder.com/56" alt="صورة المستخدم" class="conversation-avatar">
+                        <div class="conversation-info">
+                            <div class="conversation-header-row">
+                                <h5 class="conversation-name">سارة أحمد</h5>
+                                <span class="conversation-time">10:45 ص</span>
+                            </div>
+                            <p class="conversation-preview">أهلاً! كيف حالك؟ هل انتهيت من المشروع...</p>
+                            <div class="conversation-meta">
+                                <span class="conversation-badge">3</span>
+                                <div class="conversation-indicators">
+                                    <span class="conversation-indicator indicator-online" title="متصل الآن"><i class="bi bi-circle-fill"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="conversation-item">
+                        <div class="group-avatar">
+                            <img src="https://via.placeholder.com/36" alt="صورة المستخدم" class="avatar-sm avatar-1">
+                            <img src="https://via.placeholder.com/36" alt="صورة المستخدم" class="avatar-sm avatar-2">
+                            <div class="avatar-sm avatar-more">+2</div>
+                        </div>
+                        <div class="conversation-info">
+                            <div class="conversation-header-row">
+                                <h5 class="conversation-name">فريق التطوير</h5>
+                                <span class="conversation-time">أمس</span>
+                            </div>
+                            <p class="conversation-preview">محمد: يجب أن ننتهي من الميزة الجديدة...</p>
+                            <div class="conversation-meta">
+                                <div class="conversation-indicators">
+                                    <span class="conversation-indicator indicator-media" title="تحتوي على وسائط"><i class="bi bi-image"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Conversations -->
+                <div class="conversation-section">
+                    <h4 class="section-title">حديث</h4>
+                    
+                    <div class="conversation-item unread">
+                        <img src="https://via.placeholder.com/56" alt="صورة المستخدم" class="conversation-avatar">
+                        <div class="conversation-info">
+                            <div class="conversation-header-row">
+                                <h5 class="conversation-name">علي حسن</h5>
+                                <span class="conversation-time">09:30 ص</span>
+                            </div>
+                            <p class="conversation-preview">شكراً لك على المساعدة! كنت حقاً...</p>
+                            <div class="conversation-meta">
+                                <span class="conversation-badge">1</span>
+                                <div class="conversation-indicators">
+                                    <span class="conversation-indicator indicator-typing" title="يكتب الآن"><i class="bi bi-chat-dots"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="conversation-item">
+                        <img src="https://via.placeholder.com/56" alt="صورة المستخدم" class="conversation-avatar">
+                        <div class="conversation-info">
+                            <div class="conversation-header-row">
+                                <h5 class="conversation-name">ليلى مصطفى</h5>
+                                <span class="conversation-time">أمس</span>
+                            </div>
+                            <p class="conversation-preview">هل شاهدت الفيلم الجديد؟ كان رائعاً...</p>
+                            <div class="conversation-meta">
+                                <div class="conversation-indicators">
+                                    <span class="conversation-indicator indicator-link" title="تحتوي على رابط"><i class="bi bi-link-45deg"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="conversation-item">
+                        <img src="https://via.placeholder.com/56" alt="صورة المستخدم" class="conversation-avatar">
+                        <div class="conversation-info">
+                            <div class="conversation-header-row">
+                                <h5 class="conversation-name">نادي التقنية</h5>
+                                <span class="conversation-time">الخميس</span>
+                            </div>
+                            <p class="conversation-preview">تذكير: اجتماع الغداة الساعة 10 صباحاً...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Older Conversations -->
+                <div class="conversation-section">
+                    <h4 class="section-title">أقدم</h4>
+                    
+                    <div class="conversation-item">
+                        <img src="https://via.placeholder.com/56" alt="صورة المستخدم" class="conversation-avatar">
+                        <div class="conversation-info">
+                            <div class="conversation-header-row">
+                                <h5 class="conversation-name">محمد علي</h5>
+                                <span class="conversation-time">12 أكتوبر</span>
+                            </div>
+                            <p class="conversation-preview">نعم، يمكننا الاجتماع الأسبوع القادم...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="conversation-item">
+                        <div class="group-avatar">
+                            <img src="https://via.placeholder.com/36" alt="صورة المستخدم" class="avatar-sm avatar-1">
+                            <img src="https://via.placeholder.com/36" alt="صورة المستخدم" class="avatar-sm avatar-2">
+                        </div>
+                        <div class="conversation-info">
+                            <div class="conversation-header-row">
+                                <h5 class="conversation-name">العائلة</h5>
+                                <span class="conversation-time">5 أكتوبر</span>
+                            </div>
+                            <p class="conversation-preview">أمي: لا تنسى أن تأتي مبكراً يوم الجمعة...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conversation Detail -->
+        <div class="conversation-detail fade-in delay-1">
+            <div class="detail-header">
+                <div class="detail-user">
+                    <img src="https://via.placeholder.com/48" alt="صورة المستخدم" class="detail-avatar">
+                    <div class="detail-info">
+                        <h5>سارة أحمد</h5>
+                        <p>متصل الآن</p>
+                    </div>
+                </div>
+                <div class="detail-actions">
+                    <button class="header-btn" aria-label="مكالمة صوتية">
+                        <i class="bi bi-telephone"></i>
+                    </button>
+                    <button class="header-btn" aria-label="مكالمة فيديو">
+                        <i class="bi bi-camera-video"></i>
+                    </button>
+                    <button class="header-btn" aria-label="معلومات">
+                        <i class="bi bi-info-circle"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="messages-container">
+                <div class="message-date">اليوم</div>
+                
+                <div class="message-row">
+                    <img src="https://via.placeholder.com/36" alt="صورة المستخدم" class="message-avatar">
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            <p class="message-text">مرحباً أحمد! كيف حالك؟</p>
+                        </div>
+                        <span class="message-time">10:30 ص</span>
+                    </div>
+                </div>
+                
+                <div class="message-row own">
+                    <img src="https://via.placeholder.com/36" alt="صورة المستخدم" class="message-avatar">
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            <p class="message-text">أهلاً سارة! أنا بخير، شكراً لك. كيف حالك أنت؟</p>
+                        </div>
+                        <span class="message-time">10:32 ص</span>
+                        <div class="message-status">
+                            <span class="status-icon status-seen" title="مقروء"><i class="bi bi-check2-all"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="message-row">
+                    <img src="https://via.placeholder.com/36" alt="صورة المستخدم" class="message-avatar">
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            <p class="message-text">أنا أيضاً بخير، شكراً. هل انتهيت من المشروع الذي كنت تعمل عليه؟</p>
+                        </div>
+                        <span class="message-time">10:35 ص</span>
+                    </div>
+                </div>
+                
+                <div class="message-row own">
+                    <img src="https://via.placeholder.com/36" alt="صورة المستخدم" class="message-avatar">
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            <p class="message-text">نعم، تقريباً. بقي بعض العمل البسيط. هل يمكنك مساعدتي في مراجعته؟</p>
+                        </div>
+                        <span class="message-time">10:40 ص</span>
+                        <div class="message-status">
+                            <span class="status-icon status-seen" title="مقروء"><i class="bi bi-check2-all"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="message-row">
+                    <img src="https://via.placeholder.com/36" alt="صورة المستخدم" class="message-avatar">
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            <p class="message-text">بالطاعة! متى يناسبك أن نلتقي؟</p>
+                        </div>
+                        <span class="message-time">10:45 ص</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message-input">
+                <div class="input-actions">
+                    <button class="input-btn" aria-label="إضافة صورة">
+                        <i class="bi bi-image"></i>
+                    </button>
+                    <button class="input-btn" aria-label="إضافة ملصق">
+                        <i class="bi bi-emoji-smile"></i>
+                    </button>
+                    <button class="input-btn" aria-label="إضافة ملف">
+                        <i class="bi bi-paperclip"></i>
+                    </button>
+                </div>
+                <input type="text" class="message-field" placeholder="اكتب رسالة...">
+                <button class="send-btn" aria-label="إرسال">
+                    <i class="bi bi-send"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <a href="#" class="mobile-nav-item">
+            <i class="bi bi-house"></i>
+            <span>الرئيسية</span>
+        </a>
+        <a href="#" class="mobile-nav-item">
+            <i class="bi bi-search"></i>
+            <span>استكشاف</span>
+        </a>
+        <a href="#" class="mobile-nav-item">
+            <i class="bi bi-bell"></i>
+            <span>إشعارات</span>
+        </a>
+        <a href="#" class="mobile-nav-item active">
+            <i class="bi bi-chat"></i>
+            <span>المحادثات</span>
+        </a>
+    </nav>
+
+    <!-- Bootstrap & jQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Initialize variables
+            let isDarkMode = false;
+            
+            // Theme toggle functionality
+            $('#themeToggle').click(function() {
+                $('body').toggleClass('dark-mode');
+                isDarkMode = !isDarkMode;
+                
+                if (isDarkMode) {
+                    $('#themeToggle i').removeClass('bi-moon').addClass('bi-sun');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    $('#themeToggle i').removeClass('bi-sun').addClass('bi-moon');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                $('body').addClass('dark-mode');
+                $('#themeToggle i').removeClass('bi-moon').addClass('bi-sun');
+                isDarkMode = true;
+            }
+            
+            // Conversation item click handler
+            $('.conversation-item').click(function() {
+                $('.conversation-item').removeClass('active');
+                $(this).addClass('active');
+                $(this).removeClass('unread');
+                
+                // Remove unread badge
+                $(this).find('.conversation-badge').remove();
+                
+                // Update title in conversation detail
+                const userName = $(this).find('.conversation-name').text();
+                $('.detail-info h5').text(userName);
+                
+                // Show conversation detail on mobile
+                if (window.innerWidth < 992) {
+                    $('.conversation-detail').addClass('slide-in').show();
+                    $('.conversation-list').hide();
+                }
+            });
+            
+            // Back button for mobile (simulated)
+            $(document).on('click', '.detail-header .header-btn', function() {
+                if (window.innerWidth < 992) {
+                    $('.conversation-detail').hide();
+                    $('.conversation-list').show();
+                }
+            });
+            
+            // Filter tabs functionality
+            $('.filter-tab').click(function() {
+                $('.filter-tab').removeClass('active');
+                $(this).addClass('active');
+                
+                // Simulate filtering
+                const filterType = $(this).text();
+                simulateFiltering(filterType);
+            });
+            
+            // Simulate filtering conversations
+            function simulateFiltering(filterType) {
+                $('.conversation-section').hide();
+                
+                switch(filterType) {
+                    case 'الكل':
+                        $('.conversation-section').show();
+                        break;
+                    case 'غير المقروء':
+                        $('.conversation-item').hide();
+                        $('.conversation-item.unread').show();
+                        break;
+                    case 'المجموعات':
+                        $('.conversation-item').hide();
+                        $('.conversation-item .group-avatar').parent().show();
+                        break;
+                    case 'المهمة':
+                        // Simulate showing only important conversations
+                        $('.conversation-item').hide();
+                        $('.conversation-item').slice(0, 3).show();
+                        break;
+                    case 'المؤرشفة':
+                        // Simulate showing archived conversations
+                        $('.conversation-item').hide();
+                        $('.conversation-item').slice(3, 5).show();
+                        break;
+                }
+            }
+            
+            // Send message functionality
+            $('.send-btn').click(function() {
+                const messageText = $('.message-field').val().trim();
+                
+                if (messageText !== '') {
+                    // Create new message element
+                    const newMessage = `
+                        <div class="message-row own">
+                            <img src="https://via.placeholder.com/36" alt="صورة المستخدم" class="message-avatar">
+                            <div class="message-content">
+                                <div class="message-bubble">
+                                    <p class="message-text">${messageText}</p>
+                                </div>
+                                <span class="message-time">الآن</span>
+                                <div class="message-status">
+                                    <span class="status-icon" title="مرسلة"><i class="bi bi-check2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Append new message
+                    $('.messages-container').append(newMessage);
+                    
+                    // Clear input field
+                    $('.message-field').val('');
+                    
+                    // Scroll to bottom
+                    $('.messages-container').scrollTop($('.messages-container')[0].scrollHeight);
+                    
+                    // Simulate reply after a short delay
+                    setTimeout(simulateReply, 1500);
+                }
+            });
+            
+            // Simulate reply from the other person
+            function simulateReply() {
+                const replies = [
+                    "أوه، هذا رائع!",
+                    "نعم، يمكنني مساعدتك في ذلك.",
+                    "ما هو الوقت المناسب لك؟",
+                    "هل يوم السبت يناسبك؟",
+                    "سأكون متاحة في الصباح."
+                ];
+                
+                const randomReply = replies[Math.floor(Math.random() * replies.length)];
+                
+                const replyMessage = `
+                    <div class="message-row">
+                        <img src="https://via.placeholder.com/36" alt="صورة المستخدم" class="message-avatar">
+                        <div class="message-content">
+                            <div class="message-bubble">
+                                <p class="message-text">${randomReply}</p>
+                            </div>
+                            <span class="message-time">الآن</span>
+                        </div>
+                    </div>
+                `;
+                
+                // Append reply message
+                $('.messages-container').append(replyMessage);
+                
+                // Scroll to bottom
+                $('.messages-container').scrollTop($('.messages-container')[0].scrollHeight);
+                
+                // Update message status to seen
+                $('.message-row.own:last-child .status-icon')
+                    .removeClass('bi-check2')
+                    .addClass('bi-check2-all status-seen')
+                    .attr('title', 'مقروء');
+            }
+            
+            // Handle Enter key in message input
+            $('.message-field').keypress(function(e) {
+                if (e.which === 13) {
+                    $('.send-btn').click();
+                    return false;
+                }
+            });
+            
+            // Add animation to elements on scroll
+            $(window).scroll(function() {
+                $('.fade-in').each(function() {
+                    const position = $(this).offset().top;
+                    const scrollPosition = $(window).scrollTop() + $(window).height();
+                    
+                    if (position < scrollPosition) {
+                        $(this).css('opacity', '1').css('transform', 'translateY(0)');
+                    }
+                });
+            });
+            
+            // Trigger scroll event on page load
+            $(window).trigger('scroll');
+            
+            // Scroll messages to bottom initially
+            $('.messages-container').scrollTop($('.messages-container')[0].scrollHeight);
+        });
+    </script>
+</body>
+</html>

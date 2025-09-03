@@ -194,6 +194,73 @@ class Database
             R::store($settings);
             R::trash($settings);
             
+            // Create conversations table
+            $conversation = R::dispense('conversations');
+            $conversation->participant_one = 1;
+            $conversation->participant_two = 2;
+            $conversation->created_at = date('Y-m-d H:i:s');
+            $conversation->updated_at = date('Y-m-d H:i:s');
+            R::store($conversation);
+            R::trash($conversation);
+            
+            // Create messages table
+            $message = R::dispense('messages');
+            $message->conversation_id = 1;
+            $message->sender_id = 1;
+            $message->content = 'Test message';
+            $message->message_type = 'text';
+            $message->is_read = false;
+            $message->created_at = date('Y-m-d H:i:s');
+            R::store($message);
+            R::trash($message);
+            
+            // Create reels table
+            $reel = R::dispense('reels');
+            $reel->user_id = 1;
+            $reel->title = 'Test Reel';
+            $reel->description = 'Test reel description';
+            $reel->video_url = '/uploads/test.mp4';
+            $reel->thumbnail_url = '/uploads/test_thumb.jpg';
+            $reel->duration = 30;
+            $reel->views_count = 0;
+            $reel->likes_count = 0;
+            $reel->comments_count = 0;
+            $reel->hashtags = '#test #reel';
+            $reel->music_title = 'Original Audio';
+            $reel->music_artist = 'User Name';
+            $reel->is_public = true;
+            $reel->created_at = date('Y-m-d H:i:s');
+            $reel->updated_at = date('Y-m-d H:i:s');
+            R::store($reel);
+            R::trash($reel);
+            
+            // Create reel_likes table
+            $reelLike = R::dispense('reel_likes');
+            $reelLike->reel_id = 1;
+            $reelLike->user_id = 1;
+            $reelLike->created_at = date('Y-m-d H:i:s');
+            R::store($reelLike);
+            R::trash($reelLike);
+            
+            // Create reel_comments table
+            $reelComment = R::dispense('reel_comments');
+            $reelComment->reel_id = 1;
+            $reelComment->user_id = 1;
+            $reelComment->content = 'Test comment';
+            $reelComment->likes_count = 0;
+            $reelComment->created_at = date('Y-m-d H:i:s');
+            R::store($reelComment);
+            R::trash($reelComment);
+            
+            // Create reel_views table
+            $reelView = R::dispense('reel_views');
+            $reelView->reel_id = 1;
+            $reelView->user_id = 1;
+            $reelView->view_duration = 15;
+            $reelView->created_at = date('Y-m-d H:i:s');
+            R::store($reelView);
+            R::trash($reelView);
+            
         } catch (Exception $e) {
             error_log("Error creating tables: " . $e->getMessage());
         }
