@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب جديد - تطبيق تويتري</title>
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts - Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Light Mode Variables */
+            --primary-light: #7c4dff;
+            --secondary-light: #ff6e6c;
+            --accent-light: #2ce0c8;
+            --background-light: #f8f9fa;
+            --text-light: #2d3748;
+            --card-light: #ffffff;
+            --input-light: #f1f3f4;
+            --border-light: #e2e8f0;
+            
+            /* Dark Mode Variables */
+            --primary-dark: #9370ff;
+            --secondary-dark: #ff8c8a;
+            --accent-dark: #3af0da;
+            --background-dark: #1a202c;
+            --text-dark: #e2e8f0;
+            --card-dark: #2d3748;
+            --input-dark: #4a5568;
+            --border-dark: #4a5568;
+            
+            --border-radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+            --box-shadow-light: 0 4px 24px rgba(0, 0, 0, 0.05);
+            
+            /* Current Theme Variables (Default: Light) */
+            --primary: var(--primary-light);
+            --secondary: var(--secondary-light);
+            --accent: var(--accent-light);
+            --background: var(--background-light);
+            --text: var(--text-light);
+            --card: var(--card-light);
+            --input: var(--input-light);
+            --border: var(--border-light);
+        }
+
+        /* Dark Mode */
+        [data-theme="dark"] {
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --accent: var(--accent-dark);
+            --background: var(--background-dark);
+            --text: var(--text-dark);
+            --card: var(--card-dark);
+            --input: var(--input-dark);
+            --border: var(--border-dark);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            transition: var(--transition);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 70px;
+        }
+
+        /* Header Styles */
+        .navbar {
+            background-color: var(--card);
+            box-shadow: var(--box-shadow-light);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar-brand {
+            font-weight: 900;
+            color: var(--primary);
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand i {
+            color: var(--secondary);
+        }
+
+        .nav-link {
+            color: var(--text);
+            transition: var(--transition);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 1rem !important;
+            border-radius: 50px;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(124, 77, 255, 0.1);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 1rem;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: calc(100% - 2rem);
+        }
+
+        /* Main Content */
+        .main-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            width: 100%;
+        }
+
+        .signup-card {
+            background-color: var(--card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 950px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .signup-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signup-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+
+        .signup-header h2 {
+            font-weight: 800;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .signup-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .signup-body {
+            padding: 2.5rem;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .step {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--input);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--text);
+            z-index: 2;
+            position: relative;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .step.active {
+            background-color: var(--primary);
+            color: white;
+            transform: scale(1.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(124, 77, 255, 0.2);
+        }
+
+        .step.completed {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .step-label {
+            position: absolute;
+            top: 55px;
+            font-size: 0.85rem;
+            color: var(--text);
+            white-space: nowrap;
+            transform: translateX(-50%);
+            text-align: center;
+            width: max-content;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .step.active .step-label {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .progress-bar-container {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            left: 25px;
+            height: 6px;
+            background-color: var(--input);
+            z-index: 1;
+            border-radius: 3px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to left, var(--primary), var(--accent));
+            width: 0%;
+            transition: var(--transition);
+            border-radius: 3px;
+        }
+
+        /* Form Styles */
+        .form-step {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .form-title {
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-weight: 800;
+            text-align: center;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 1.75rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--text);
+            transition: var(--transition);
+            font-size: 1.05rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--border);
+            border-radius: var(--border-radius);
+            background-color: var(--input);
+            color: var(--text);
+            font-family: 'Tajawal', sans-serif;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(124, 77, 255, 0.2);
+            outline: none;
+            background-color: var(--card);
+        }
+
+        .form-control.error {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 0.25rem rgba(255, 110, 108, 0.2);
+        }
+
+        .error-message {
+            color: var(--secondary);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+            font-weight: 500;
+        }
+
+        .form-control.error + .error-message {
+            display: block;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text);
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .input-with-icon .form-control {
+            padding-left: 3.25rem;
+        }
+
+        .form-control:focus + .input-icon {
+            color: var(--primary);
+            opacity: 1;
+        }
+
+        /* Password Strength */
+        .password-strength {
+            margin-top: 0.75rem;
+        }
+
+        .strength-meter {
+            height: 8px;
+            background-color: var(--input);
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+
+        .strength-meter-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .strength-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .password-requirements {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: var(--input);
+            border-radius: var(--border-radius);
+            border-right: 4px solid var(--primary);
+        }
+
+        .password-requirements ul {
+            margin-bottom: 0;
+            padding-right: 1rem;
+        }
+
+        .password-requirements li {
+            margin-bottom: 0.35rem;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .password-requirements li.requirement-met {
+            color: var(--accent);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1.05rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 14px rgba(124, 77, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(124, 77, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+            box-shadow: 0 4px 14px rgba(255, 110, 108, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 110, 108, 0.5);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            box-shadow: 0 4px 14px rgba(124, 77, 255, 0.1);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(124, 77, 255, 0.2);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        /* Social Login */
+        .social-login {
+            margin: 2.5rem 0;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--text);
+            opacity: 0.7;
+            font-weight: 600;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .divider::before {
+            margin-left: 1.5rem;
+        }
+
+        .divider::after {
+            margin-right: 1.5rem;
+        }
+
+        .social-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.9rem;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--border);
+            background-color: var(--card);
+            color: var(--text);
+            transition: var(--transition);
+            cursor: pointer;
+            font-weight: 600;
+            gap: 0.5rem;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow-light);
+        }
+
+        .social-btn.google:hover {
+            border-color: #DB4437;
+            color: #DB4437;
+        }
+
+        .social-btn.facebook:hover {
+            border-color: #4267B2;
+            color: #4267B2;
+        }
+
+        .social-btn.apple:hover {
+            border-color: #000;
+            color: #000;
+        }
+
+        /* Checkbox and Radio Customization */
+        .form-check {
+            margin-bottom: 0.75rem;
+            padding-right: 2rem;
+        }
+
+        .form-check-input {
+            width: 1.3em;
+            height: 1.3em;
+            margin-left: 0.75rem;
+            margin-top: 0.15rem;
+            background-color: var(--input);
+            border: 2px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(124, 77, 255, 0.2);
+            border-color: var(--primary);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .form-check-label {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        /* Interest Tags */
+        .interests-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .interest-tag {
+            padding: 0.75rem 1.25rem;
+            background-color: var(--input);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            user-select: none;
+            font-weight: 500;
+            border: 2px solid transparent;
+        }
+
+        .interest-tag:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 77, 255, 0.3);
+        }
+
+        .interest-tag.selected {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 77, 255, 0.3);
+        }
+
+        /* Profile Picture Upload */
+        .profile-picture-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        .profile-picture-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: var(--input);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: 4px solid var(--primary);
+            transition: var(--transition);
+            box-shadow: 0 6px 20px rgba(124, 77, 255, 0.2);
+        }
+
+        .profile-picture-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .upload-btn {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .upload-btn input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Verification Code */
+        .verification-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 2rem 0;
+        }
+
+        .verification-input {
+            width: 55px;
+            height: 55px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border: 2px solid var(--border);
+            border-radius: var(--border-radius);
+            background-color: var(--input);
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .verification-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(124, 77, 255, 0.2);
+            outline: none;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--card);
+            padding: 2rem 0;
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--input);
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary);
+            background-color: rgba(124, 77, 255, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        /* Success Animation */
+        .success-checkmark {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .check-icon {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            border-radius: 50%;
+            box-sizing: content-box;
+            border: 6px solid var(--accent);
+            animation: scaleIn 0.5s ease-in-out forwards;
+        }
+
+        .check-icon::after {
+            content: '';
+            position: absolute;
+            top: 46px;
+            left: 28px;
+            transform: rotate(45deg);
+            height: 50px;
+            width: 25px;
+            border-radius: 0 0 2px 0;
+            border-right: 6px solid var(--accent);
+            border-bottom: 6px solid var(--accent);
+            animation: checkmark 0.5s ease-in-out 0.5s forwards;
+            opacity: 0;
+        }
+
+        @keyframes scaleIn {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes checkmark {
+            0% {
+                height: 0;
+                width: 0;
+                opacity: 1;
+            }
+            20% {
+                height: 0;
+                width: 25px;
+                opacity: 1;
+            }
+            40% {
+                height: 50px;
+                width: 25px;
+                opacity: 1;
+            }
+            100% {
+                height: 50px;
+                width: 25px;
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .signup-body {
+                padding: 2rem;
+            }
+            
+            .social-buttons {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .step {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .progress-bar-container {
+                top: 22.5px;
+                right: 22.5px;
+                left: 22.5px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.4rem;
+            }
+            
+            .signup-card {
+                margin: 0.5rem;
+                width: calc(100% - 1rem);
+            }
+            
+            .signup-header {
+                padding: 1.5rem;
+            }
+            
+            .signup-body {
+                padding: 1.5rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .verification-container {
+                gap: 0.5rem;
+            }
+            
+            .verification-input {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+            
+            .step-label {
+                font-size: 0.75rem;
+            }
+            
+            .form-title {
+                font-size: 1.6rem;
+            }
+            
+            .footer-links {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                padding-top: 65px;
+            }
+            
+            .navbar {
+                padding: 0.5rem;
+            }
+            
+            .main-container {
+                padding: 1rem 0.5rem;
+            }
+            
+            .signup-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .signup-header p {
+                font-size: 1rem;
+            }
+            
+            .step {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
+            
+            .progress-bar-container {
+                top: 20px;
+                right: 20px;
+                left: 20px;
+            }
+            
+            .form-control {
+                padding: 0.9rem 1.1rem;
+            }
+            
+            .input-with-icon .form-control {
+                padding-left: 3rem;
+            }
+            
+            .input-icon {
+                left: 15px;
+            }
+            
+            .btn {
+                padding: 0.9rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .profile-picture-preview {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .interests-container {
+                gap: 0.5rem;
+            }
+            
+            .interest-tag {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .verification-input {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            
+            .success-checkmark {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .check-icon {
+                width: 80px;
+                height: 80px;
+                border-width: 5px;
+            }
+            
+            .check-icon::after {
+                top: 36px;
+                left: 22px;
+                height: 40px;
+                width: 20px;
+                border-width: 5px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .step {
+                width: 35px;
+                height: 35px;
+                font-size: 0.8rem;
+            }
+            
+            .progress-bar-container {
+                top: 17.5px;
+                right: 17.5px;
+                left: 17.5px;
+            }
+            
+            .step-label {
+                font-size: 0.7rem;
+                top: 40px;
+            }
+            
+            .form-title {
+                font-size: 1.4rem;
+            }
+            
+            .form-label {
+                font-size: 1rem;
+            }
+            
+            .form-control {
+                padding: 0.8rem 1rem;
+                font-size: 0.95rem;
+            }
+            
+            .verification-input {
+                width: 35px;
+                height: 35px;
+                font-size: 1.1rem;
+            }
+            
+            .footer-links {
+                gap: 0.75rem;
+            }
+            
+            .footer-link {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* RTL Specific Adjustments */
+        .form-check-input {
+            float: right;
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--input);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-twitter"></i> تويتري
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">استكشاف</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">الدعم</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <button class="theme-toggle btn" id="themeToggle">
+                            <i class="bi bi-moon-fill"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="signup-card">
+            <div class="signup-header">
+                <h2>انضم إلى مجتمعنا</h2>
+                <p>أنشئ حسابك الآن وابدأ رحلتك معنا</p>
+            </div>
+            <div class="signup-body">
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-steps">
+                        <div class="step active" data-step="1">
+                            1
+                            <span class="step-label">المعلومات الأساسية</span>
+                        </div>
+                        <div class="step" data-step="2">
+                            2
+                            <span class="step-label">معلومات الحساب</span>
+                        </div>
+                        <div class="step" data-step="3">
+                            3
+                            <span class="step-label">التخصيص</span>
+                        </div>
+                        <div class="step" data-step="4">
+                            4
+                            <span class="step-label">التحقق</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                </div>
+
+                <!-- Registration Form -->
+                <form id="registrationForm">
+                    <!-- Step 1: Basic Information -->
+                    <div class="form-step active" id="step1">
+                        <h3 class="form-title">المعلومات الأساسية</h3>
+                        
+                        <div class="form-group">
+                            <label for="fullName" class="form-label">الاسم الكامل</label>
+                            <input type="text" id="fullName" class="form-control" placeholder="أدخل اسمك الكامل" required>
+                            <div class="error-message">الرجاء إدخال اسم صحيح (3 أحرف على الأقل)</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">البريد الإلكتروني</label>
+                            <div class="input-with-icon">
+                                <i class="bi bi-envelope input-icon"></i>
+                                <input type="email" id="email" class="form-control" placeholder="example@domain.com" required>
+                            </div>
+                            <div class="error-message">الرجاء إدخال بريد إلكتروني صحيح</div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="birthDate" class="form-label">تاريخ الميلاد</label>
+                                    <input type="date" id="birthDate" class="form-control" required>
+                                    <div class="error-message">يجب أن يكون عمرك 13 سنة على الأقل</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">الجنس</label>
+                                    <div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+                                            <label class="form-check-label" for="male">ذكر</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                                            <label class="form-check-label" for="female">أنثى</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gender" id="other" value="other" checked>
+                                            <label class="form-check-label" for="other">أفضل عدم الإفصاح</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary" onclick="nextStep(1)">التالي <i class="bi bi-arrow-left"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Account Information -->
+                    <div class="form-step" id="step2">
+                        <h3 class="form-title">معلومات الحساب</h3>
+                        
+                        <div class="form-group">
+                            <label for="username" class="form-label">اسم المستخدم</label>
+                            <div class="input-with-icon">
+                                <i class="bi bi-at input-icon"></i>
+                                <input type="text" id="username" class="form-control" placeholder="اسم المستخدم" required>
+                            </div>
+                            <div class="error-message">اسم المستخدم يجب أن يكون بين 3 و20 حرفاً (أحرف، أرقام، _ فقط)</div>
+                            <div class="text-muted mt-2" id="usernameSuggestions"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password" class="form-label">كلمة المرور</label>
+                            <div class="input-with-icon">
+                                <i class="bi bi-lock input-icon"></i>
+                                <input type="password" id="password" class="form-control" placeholder="كلمة المرور" required>
+                            </div>
+                            
+                            <div class="password-strength">
+                                <div class="strength-meter">
+                                    <div class="strength-meter-fill" id="passwordStrengthMeter"></div>
+                                </div>
+                                <div class="strength-text" id="passwordStrengthText">قوة كلمة المرور</div>
+                            </div>
+                            
+                            <div class="password-requirements">
+                                <small class="d-block mb-2 fw-bold">يجب أن تحتوي كلمة المرور على:</small>
+                                <ul class="mb-0">
+                                    <li id="reqLength">8 أحرف على الأقل</li>
+                                    <li id="reqUpperCase">حرف كبير واحد على الأقل</li>
+                                    <li id="reqNumber">رقم واحد على الأقل</li>
+                                    <li id="reqSpecial">رمز خاص واحد على الأقل (!@#$%^&*)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label">تأكيد كلمة المرور</label>
+                            <div class="input-with-icon">
+                                <i class="bi bi-lock-fill input-icon"></i>
+                                <input type="password" id="confirmPassword" class="form-control" placeholder="تأكيد كلمة المرور" required>
+                            </div>
+                            <div class="error-message">كلمة المرور غير متطابقة</div>
+                        </div>
+                        
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline" onclick="prevStep(2)"><i class="bi bi-arrow-right"></i> السابق</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(2)">التالي <i class="bi bi-arrow-left"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Customization -->
+                    <div class="form-step" id="step3">
+                        <h3 class="form-title">التخصيص والتفضيلات</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">الاهتمامات (اختر 3 على الأقل)</label>
+                            <div class="interests-container" id="interestsContainer">
+                                <div class="interest-tag" data-interest="technology">تكنولوجيا</div>
+                                <div class="interest-tag" data-interest="sports">رياضة</div>
+                                <div class="interest-tag" data-interest="art">فن</div>
+                                <div class="interest-tag" data-interest="music">موسيقى</div>
+                                <div class="interest-tag" data-interest="science">علوم</div>
+                                <div class="interest-tag" data-interest="travel">سفر</div>
+                                <div class="interest-tag" data-interest="food">طعام</div>
+                                <div class="interest-tag" data-interest="gaming">ألعاب</div>
+                                <div class="interest-tag" data-interest="movies">أفلام</div>
+                                <div class="interest-tag" data-interest="books">كتب</div>
+                                <div class="interest-tag" data-interest="fashion">موضة</div>
+                                <div class="interest-tag" data-interest="health">صحة</div>
+                            </div>
+                            <div class="error-message">الرجاء اختيار 3 اهتمامات على الأقل</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">تفضيلات الإشعارات</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="notifEmail" checked>
+                                <label class="form-check-label" for="notifEmail">البريد الإلكتروني</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="notifPush" checked>
+                                <label class="form-check-label" for="notifPush">الإشعارات</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="notifUpdates">
+                                <label class="form-check-label" for="notifUpdates">التحديثات والإعلانات</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">صورة الملف الشخصي (اختياري)</label>
+                            <div class="profile-picture-upload">
+                                <div class="profile-picture-preview" id="profilePreview">
+                                    <i class="bi bi-person-circle" style="font-size: 5rem; color: #ccc;"></i>
+                                </div>
+                                <label class="upload-btn btn btn-outline">
+                                    <i class="bi bi-cloud-upload"></i> اختر صورة
+                                    <input type="file" id="profilePicture" accept="image/*" style="display: none;">
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline" onclick="prevStep(3)"><i class="bi bi-arrow-right"></i> السابق</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(3)">التالي <i class="bi bi-arrow-left"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4: Verification -->
+                    <div class="form-step" id="step4">
+                        <h3 class="form-title">التحقق والأمان</h3>
+                        
+                        <div class="form-group">
+                            <p class="text-center">لقد أرسلنا رمز التحقق إلى <span id="verificationEmail" class="fw-bold">user@example.com</span></p>
+                            
+                            <div class="verification-container">
+                                <input type="text" class="verification-input" maxlength="1" data-index="1">
+                                <input type="text" class="verification-input" maxlength="1" data-index="2">
+                                <input type="text" class="verification-input" maxlength="1" data-index="3">
+                                <input type="text" class="verification-input" maxlength="1" data-index="4">
+                                <input type="text" class="verification-input" maxlength="1" data-index="5">
+                                <input type="text" class="verification-input" maxlength="1" data-index="6">
+                            </div>
+                            
+                            <div class="text-center mt-3">
+                                <a href="#" id="resendCode" class="text-muted">إعادة إرسال الرمز</a>
+                                <div id="resendTimer" class="text-muted small mt-1">يمكنك إعادة الإرسال خلال <span id="timer">60</span> ثانية</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="twoFactor">
+                                <label class="form-check-label" for="twoFactor">تفعيل المصادقة الثنائية (2FA) لزيادة الأمان</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="terms" required>
+                                <label class="form-check-label" for="terms">أوافق على <a href="#">شروط الخدمة</a> و <a href="#">سياسة الخصوصية</a></label>
+                            </div>
+                            <div class="error-message">يجب الموافقة على الشروط والأحكام</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                            <div class="error-message">الرجاء إكمال التحقق</div>
+                        </div>
+                        
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline" onclick="prevStep(4)"><i class="bi bi-arrow-right"></i> السابق</button>
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-person-plus"></i> إنشاء الحساب</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Success Step (Hidden initially) -->
+                    <div class="form-step text-center" id="successStep" style="display: none;">
+                        <div class="success-checkmark">
+                            <div class="check-icon"></div>
+                        </div>
+                        <h3 class="mt-4 text-success">تم إنشاء حسابك بنجاح!</h3>
+                        <p class="text-muted">تهانينا! يمكنك الآن استخدام حسابك للدخول إلى المنصة.</p>
+                        <a href="#" class="btn btn-primary mt-3">الذهاب إلى الصفحة الرئيسية</a>
+                    </div>
+                </form>
+                
+                <!-- Social Login -->
+                <div class="social-login">
+                    <div class="divider">أو سجل باستخدام</div>
+                    <div class="social-buttons">
+                        <button class="social-btn google">
+                            <i class="bi bi-google"></i> Google
+                        </button>
+                        <button class="social-btn facebook">
+                            <i class="bi bi-facebook"></i> Facebook
+                        </button>
+                        <button class="social-btn apple">
+                            <i class="bi bi-apple"></i> Apple
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Additional Links -->
+                <div class="text-center mt-4">
+                    <p>هل لديك حساب بالفعل؟ <a href="#" class="text-primary fw-bold">تسجيل الدخول</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="#" class="footer-link">عن تويتري</a>
+                <a href="#" class="footer-link">مركز المساعدة</a>
+                <a href="#" class="footer-link">شروط الخدمة</a>
+                <a href="#" class="footer-link">سياسة الخصوصية</a>
+                <a href="#" class="footer-link">سياسة الكوكيز</a>
+                <a href="#" class="footer-link">إمكانية الوصول</a>
+                <a href="#" class="footer-link">الإعلانات</a>
+                <a href="#" class="footer-link">الوظائف</a>
+            </div>
+            <div class="copyright">
+                <p>© 2023 تويتري. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        // Check for saved theme preference or respect OS preference
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        body.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        function updateThemeIcon(theme) {
+            themeToggle.innerHTML = theme === 'light' ? '<i class="bi bi-moon-fill"></i>' : '<i class="bi bi-sun-fill"></i>';
+        }
+        
+        // Form Steps Management
+        let currentStep = 1;
+        const totalSteps = 4;
+        const progressBar = document.getElementById('progressBar');
+        
+        function updateProgressBar() {
+            const progressPercentage = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            
+            // Update step indicators
+            document.querySelectorAll('.step').forEach((step, index) => {
+                if (index + 1 < currentStep) {
+                    step.classList.remove('active');
+                    step.classList.add('completed');
+                } else if (index + 1 === currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                } else {
+                    step.classList.remove('active', 'completed');
+                }
+            });
+        }
+        
+        function showStep(stepNumber) {
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            const stepElement = document.getElementById(`step${stepNumber}`);
+            if (stepElement) {
+                stepElement.classList.add('active');
+            }
+            
+            currentStep = stepNumber;
+            updateProgressBar();
+        }
+        
+        function nextStep(current) {
+            if (validateStep(current)) {
+                if (current < totalSteps) {
+                    showStep(current + 1);
+                }
+            }
+        }
+        
+        function prevStep(current) {
+            if (current > 1) {
+                showStep(current - 1);
+            }
+        }
+        
+        function validateStep(step) {
+            let isValid = true;
+            
+            switch(step) {
+                case 1:
+                    const fullName = document.getElementById('fullName');
+                    const email = document.getElementById('email');
+                    
+                    // Validate full name
+                    if (!fullName.value || fullName.value.length < 3) {
+                        showError(fullName, 'الرجاء إدخال اسم صحيح (3 أحرف على الأقل)');
+                        isValid = false;
+                    } else {
+                        clearError(fullName);
+                    }
+                    
+                    // Validate email
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!email.value || !emailRegex.test(email.value)) {
+                        showError(email, 'الرجاء إدخال بريد إلكتروني صحيح');
+                        isValid = false;
+                    } else {
+                        clearError(email);
+                    }
+                    
+                    // Validate birth date
+                    const birthDate = document.getElementById('birthDate');
+                    if (!birthDate.value) {
+                        showError(birthDate, 'الرجاء إدخال تاريخ الميلاد');
+                        isValid = false;
+                    } else {
+                        const today = new Date();
+                        const birthDateObj = new Date(birthDate.value);
+                        const age = today.getFullYear() - birthDateObj.getFullYear();
+                        
+                        if (age < 13) {
+                            showError(birthDate, 'يجب أن يكون عمرك 13 سنة على الأقل');
+                            isValid = false;
+                        } else {
+                            clearError(birthDate);
+                        }
+                    }
+                    break;
+                    
+                case 2:
+                    const username = document.getElementById('username');
+                    const password = document.getElementById('password');
+                    const confirmPassword = document.getElementById('confirmPassword');
+                    
+                    // Validate username
+                    const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+                    if (!username.value || !usernameRegex.test(username.value)) {
+                        showError(username, 'اسم المستخدم يجب أن يكون بين 3 و20 حرفاً (أحرف، أرقام، _ فقط)');
+                        isValid = false;
+                    } else {
+                        clearError(username);
+                    }
+                    
+                    // Validate password
+                    if (!validatePassword(password.value)) {
+                        showError(password, 'كلمة المرور غير قوية بما فيه الكفاية');
+                        isValid = false;
+                    } else {
+                        clearError(password);
+                    }
+                    
+                    // Validate password confirmation
+                    if (password.value !== confirmPassword.value) {
+                        showError(confirmPassword, 'كلمة المرور غير متطابقة');
+                        isValid = false;
+                    } else {
+                        clearError(confirmPassword);
+                    }
+                    break;
+                    
+                case 3:
+                    // Validate interests (at least 3 selected)
+                    const selectedInterests = document.querySelectorAll('.interest-tag.selected');
+                    if (selectedInterests.length < 3) {
+                        document.querySelector('#step3 .error-message').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        document.querySelector('#step3 .error-message').style.display = 'none';
+                    }
+                    break;
+                    
+                case 4:
+                    const terms = document.getElementById('terms');
+                    const verificationInputs = document.querySelectorAll('.verification-input');
+                    
+                    // Validate terms acceptance
+                    if (!terms.checked) {
+                        document.querySelector('#step4 .error-message').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        document.querySelector('#step4 .error-message').style.display = 'none';
+                    }
+                    
+                    // Validate verification code (simplified)
+                    let codeComplete = true;
+                    verificationInputs.forEach(input => {
+                        if (!input.value) codeComplete = false;
+                    });
+                    
+                    if (!codeComplete) {
+                        alert('الرجاء إدخال رمز التحقق بالكامل');
+                        isValid = false;
+                    }
+                    break;
+            }
+            
+            return isValid;
+        }
+        
+        function showError(input, message) {
+            input.classList.add('error');
+            const errorElement = input.nextElementSibling;
+            if (errorElement && errorElement.classList.contains('error-message')) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+            input.classList.add('shake');
+            setTimeout(() => {
+                input.classList.remove('shake');
+            }, 500);
+        }
+        
+        function clearError(input) {
+            input.classList.remove('error');
+            const errorElement = input.nextElementSibling;
+            if (errorElement && errorElement.classList.contains('error-message')) {
+                errorElement.style.display = 'none';
+            }
+        }
+        
+        // Password Strength Validation
+        function validatePassword(password) {
+            // At least 8 characters
+            if (password.length < 8) return false;
+            
+            // At least one uppercase letter
+            if (!/[A-Z]/.test(password)) return false;
+            
+            // At least one number
+            if (!/\d/.test(password)) return false;
+            
+            // At least one special character
+            if (!/[!@#$%^&*]/.test(password)) return false;
+            
+            return true;
+        }
+        
+        // Password Strength Indicator
+        const passwordInput = document.getElementById('password');
+        const strengthMeter = document.getElementById('passwordStrengthMeter');
+        const strengthText = document.getElementById('passwordStrengthText');
+        
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+            let message = '';
+            let meterColor = '';
+            
+            // Check password length
+            if (password.length >= 8) strength += 25;
+            
+            // Check for uppercase letters
+            if (/[A-Z]/.test(password)) strength += 25;
+            
+            // Check for numbers
+            if (/\d/.test(password)) strength += 25;
+            
+            // Check for special characters
+            if (/[!@#$%^&*]/.test(password)) strength += 25;
+            
+            // Update strength meter and text
+            strengthMeter.style.width = `${strength}%`;
+            
+            if (strength === 0) {
+                message = 'أدخل كلمة مرور';
+                meterColor = '#ddd';
+            } else if (strength < 50) {
+                message = 'ضعيفة';
+                meterColor = '#ff3860';
+            } else if (strength < 75) {
+                message = 'متوسطة';
+                meterColor = '#ffdd57';
+            } else if (strength < 100) {
+                message = 'جيدة';
+                meterColor = '#23d160';
+            } else {
+                message = 'قوية جداً';
+                meterColor = '#3273dc';
+            }
+            
+            strengthMeter.style.backgroundColor = meterColor;
+            strengthText.textContent = message;
+            strengthText.style.color = meterColor;
+            
+            // Update requirement indicators
+            document.getElementById('reqLength').style.color = password.length >= 8 ? '#23d160' : '#ff3860';
+            document.getElementById('reqUpperCase').style.color = /[A-Z]/.test(password) ? '#23d160' : '#ff3860';
+            document.getElementById('reqNumber').style.color = /\d/.test(password) ? '#23d160' : '#ff3860';
+            document.getElementById('reqSpecial').style.color = /[!@#$%^&*]/.test(password) ? '#23d160' : '#ff3860';
+            
+            // Add/remove class for met requirements
+            document.getElementById('reqLength').classList.toggle('requirement-met', password.length >= 8);
+            document.getElementById('reqUpperCase').classList.toggle('requirement-met', /[A-Z]/.test(password));
+            document.getElementById('reqNumber').classList.toggle('requirement-met', /\d/.test(password));
+            document.getElementById('reqSpecial').classList.toggle('requirement-met', /[!@#$%^&*]/.test(password));
+        });
+        
+        // Confirm Password Validation
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        confirmPasswordInput.addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                showError(this, 'كلمة المرور غير متطابقة');
+            } else {
+                clearError(this);
+            }
+        });
+        
+        // Interests Selection
+        const interestTags = document.querySelectorAll('.interest-tag');
+        interestTags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                this.classList.toggle('selected');
+                
+                // Validate if at least 3 interests are selected
+                const selectedInterests = document.querySelectorAll('.interest-tag.selected');
+                if (selectedInterests.length >= 3) {
+                    document.querySelector('#step3 .error-message').style.display = 'none';
+                }
+            });
+        });
+        
+        // Profile Picture Upload Preview
+        const profilePictureInput = document.getElementById('profilePicture');
+        const profilePreview = document.getElementById('profilePreview');
+        
+        profilePictureInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profilePreview.innerHTML = `<img src="${e.target.result}" alt="Profile Preview">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Verification Code Inputs
+        const verificationInputs = document.querySelectorAll('.verification-input');
+        verificationInputs.forEach((input, index) => {
+            input.addEventListener('input', function() {
+                if (this.value.length === 1) {
+                    if (index < verificationInputs.length - 1) {
+                        verificationInputs[index + 1].focus();
+                    }
+                }
+            });
+            
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && this.value === '') {
+                    if (index > 0) {
+                        verificationInputs[index - 1].focus();
+                    }
+                }
+            });
+        });
+        
+        // Resend Code Timer
+        let resendTime = 60;
+        const resendTimer = document.getElementById('resendTimer');
+        const timerElement = document.getElementById('timer');
+        const resendCodeLink = document.getElementById('resendCode');
+        
+        resendCodeLink.style.pointerEvents = 'none';
+        resendCodeLink.style.opacity = '0.5';
+        
+        const countdown = setInterval(() => {
+            resendTime--;
+            timerElement.textContent = resendTime;
+            
+            if (resendTime <= 0) {
+                clearInterval(countdown);
+                resendTimer.style.display = 'none';
+                resendCodeLink.style.pointerEvents = 'auto';
+                resendCodeLink.style.opacity = '1';
+            }
+        }, 1000);
+        
+        resendCodeLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Simulate resending code
+            alert('تم إعادة إرسال رمز التحقق إلى بريدك الإلكتروني');
+            
+            // Reset timer
+            resendTime = 60;
+            timerElement.textContent = resendTime;
+            resendTimer.style.display = 'block';
+            resendCodeLink.style.pointerEvents = 'none';
+            resendCodeLink.style.opacity = '0.5';
+            
+            const newCountdown = setInterval(() => {
+                resendTime--;
+                timerElement.textContent = resendTime;
+                
+                if (resendTime <= 0) {
+                    clearInterval(newCountdown);
+                    resendTimer.style.display = 'none';
+                    resendCodeLink.style.pointerEvents = 'auto';
+                    resendCodeLink.style.opacity = '1';
+                }
+            }, 1000);
+        });
+        
+        // Form Submission
+        const registrationForm = document.getElementById('registrationForm');
+        registrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateStep(4)) {
+                // Simulate form submission
+                const submitButton = this.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> جاري إنشاء الحساب...';
+                
+                setTimeout(() => {
+                    // Show success step
+                    document.querySelectorAll('.form-step').forEach(step => {
+                        step.style.display = 'none';
+                    });
+                    document.getElementById('successStep').style.display = 'block';
+                    
+                    // Hide progress bar and social login
+                    document.querySelector('.progress-container').style.display = 'none';
+                    document.querySelector('.social-login').style.display = 'none';
+                    document.querySelector('.text-center.mt-4').style.display = 'none';
+                }, 2000);
+            }
+        });
+        
+        // Username Suggestions
+        const usernameInput = document.getElementById('username');
+        const usernameSuggestions = document.getElementById('usernameSuggestions');
+        
+        usernameInput.addEventListener('blur', function() {
+            if (this.value && !this.classList.contains('error')) {
+                // Simulate username availability check
+                const suggestions = [
+                    this.value + '123',
+                    this.value + '_2023',
+                    'the_' + this.value,
+                    this.value + Math.floor(Math.random() * 100)
+                ];
+                
+                usernameSuggestions.innerHTML = `اقتراحات: ${suggestions.join(', ')}`;
+            } else {
+                usernameSuggestions.innerHTML = '';
+            }
+        });
+        
+        // Update verification email display
+        const emailInput = document.getElementById('email');
+        const verificationEmail = document.getElementById('verificationEmail');
+        
+        emailInput.addEventListener('blur', function() {
+            if (this.value && !this.classList.contains('error')) {
+                verificationEmail.textContent = this.value;
+            }
+        });
+        
+        // Initialize the form
+        updateProgressBar();
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+    "name": "tewiiq/social-app",
+    "description": "تطبيق تويق - منصة التواصل الاجتماعي",
+    "authors": [
+        {
+            "name": "Tewiiq Team"
+        }
+    ],
+    "require": {
+        "gabordemooij/redbean": "^5.7",
+        "league/plates": "^3.4",
+        "vlucas/phpdotenv": "^5.0"
+    }
+}
