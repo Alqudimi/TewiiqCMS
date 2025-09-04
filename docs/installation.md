@@ -35,13 +35,10 @@ php-pgsql (إذا كنت تستخدم PostgreSQL)
 #### 1. تنزيل الكود المصدري
 ```bash
 # استنساخ المشروع من Git
-git clone https://github.com/your-username/tewiiq.git
+git clone https://github.com/Alqudimi/TewiiqCMS.
 cd tewiiq
 
-# أو تنزيل الملف المضغوط وفك الضغط
-wget https://github.com/your-username/tewiiq/archive/main.zip
-unzip main.zip
-cd tewiiq-main
+
 ```
 
 #### 2. تثبيت التبعيات
